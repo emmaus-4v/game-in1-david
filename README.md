@@ -1,30 +1,31 @@
 Deze game is gebaseerd op het template voor 4HV van het Emmauscollege Rotterdam
 
-## Mijn spel: *naam van het spel*
+## Mijn spel: Jupin' jack
 Gemaakt door:
-- *naam van leerling 1*
-- *naam van leerling 2*
+DavidBeugelsdijk
 
 ## Mijn planning
 
 Basis: uitleg, spelen, afgaan en punten
 - [x] maak index.html, style.css en script.js met canvas
 - [ ] teken speler
-- [ ] beweeg speler
-- [ ] ... *(vul zelf aan)*
+- [ ] spring speler
+- [ ] buk speler
 - [ ] punten op scherm zetten
 - [ ] punten kunnen scoren
 - [ ] uitlegscherm
 
-Uitbreiding: *bedenk iets, bijvoorbeeld meer tegenstanders*
-- [ ] *later uitwerken*
-- [ ] *later uitwerken*
-- [ ] *later uitwerken*
+Uitbreiding: pacours
+- [ ] blokjes tekenen
+- [ ] gameover als speler blokje raakt
+- [ ] verschillende blokjes/parcoursstukjes
 
-Uitbreiding: *bedenk iets, bijvoorbeeld bewegende achtergrond*
-- [ ] *later uitwerken*
-- [ ] *later uitwerken*
-- [ ] *later uitwerken*
+Uitbreiding: achtergrond en extra poppetjes
+- [ ] bewegende ahtergrond
+- [ ] nieuwe poppetjes maken
+- [ ] nieuwe poppetjes kunnen kiezen
+- [ ] (achtergrond veranderen gebaseerd op afstand)
+- [ ] (poppetjes veranderen kleine details zoals hoogte springen)
 
 ## Credits
 - Game template van het Emmauscollege Rotterdam https://github.com/emmauscollege/4HV-game-template
