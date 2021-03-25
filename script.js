@@ -34,6 +34,7 @@ var vijandY = 0;   // y-positie van vijand
 var score = 0; // aantal behaalde punten
 
 var maxJumpHeight = 50;
+var jumpSpeed = 3;
 var valStatus = false;
 var springStatus = false;
 var groundHeight = 605;
@@ -109,22 +110,27 @@ var beweegKogel = function() {
  */
 var beweegSpeler = function() {
     if (springStatus === false) { // zodat maxJumpHeight alleen veranderd wordt als de speler op de grond staat
-        maxJumpHeight = spelerY - 150;
+        maxJumpHeight = spelerY - 250;
     }
-    if (keyIsDown(32) && spelerY > maxJumpHeight && valStatus === false) {
+    if (keyIsDown(32) && spelerY > maxJumpHeight && valStatus === false) { //als spatie wordt gedrukt spring je. Het zorgt er ook voor dat je niet kan springen in de lucht.
         springStatus = true;
     } 
     if (springStatus === true) {
-        spelerY = spelerY - 7; 
+        spelerY = spelerY - Math.pow(jumpSpeed, 2); //speler springt. Hoe hoger hoe trager.
+        jumpSpeed = jumpSpeed - 0.03;
     }
-    if (spelerY <= maxJumpHeight) {
+    if (spelerY <= maxJumpHeight) { // zodat je niet de atmosfeer in vliegt en dus valt
         valStatus = true;
         springStatus = false;
     }
-    if (valStatus === true && spelerY < groundHeight) {
-        spelerY = spelerY + 7; 
-    } else if (spelerY >= groundHeight) {
+    if (valStatus === true && spelerY < groundHeight) { //speler valt. hoe lager hoe sneller.
+        spelerY = spelerY + Math.pow(jumpSpeed, 2); 
+        jumpSpeed = jumpSpeed + 0.03; 
+    }
+    if (spelerY >= groundHeight) { // zodat de speler niet door de grond valt en altijd op de beginplaats terugkomt.
         valStatus = false;
+        jumpSpeed = 3;
+        spelerY = groundHeight;
     }
 }
 
@@ -181,6 +187,7 @@ function setup() {
 function draw() {
   switch (spelStatus) {
     case SPELEN:
+    
       beweegVijand();
       beweegKogel();
       beweegSpeler();
