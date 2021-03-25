@@ -22,8 +22,8 @@ const SPELEN = 1;
 const GAMEOVER = 2;
 var spelStatus = SPELEN;
 
-var spelerX = 800; // x-positie van speler
-var spelerY = 100; // y-positie van speler
+var spelerX = 63; // x-positie van speler
+var spelerY = 605; // y-positie van speler
 
 var kogelX = 0;    // x-positie van kogel
 var kogelY = 0;    // y-positie van kogel
@@ -33,7 +33,10 @@ var vijandY = 0;   // y-positie van vijand
 
 var score = 0; // aantal behaalde punten
 
-
+var maxJumpHeight = 50;
+var valStatus = false;
+var springStatus = false;
+var groundHeight = 605;
 
 
 
@@ -80,7 +83,7 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   fill("white");
-  ellipse(x, y, 50, 50);
+  rect(x, y, 40, 75);
 };
 
 
@@ -105,9 +108,25 @@ var beweegKogel = function() {
  * Updatet globale variabele spelerX en spelerY
  */
 var beweegSpeler = function() {
-
-};
-
+    if (springStatus === false) { // zodat maxJumpHeight alleen veranderd wordt als de speler op de grond staat
+        maxJumpHeight = spelerY - 150;
+    }
+    if (keyIsDown(32) && spelerY > maxJumpHeight && valStatus === false) {
+        springStatus = true;
+    } 
+    if (springStatus === true) {
+        spelerY = spelerY - 7; 
+    }
+    if (spelerY <= maxJumpHeight) {
+        valStatus = true;
+        springStatus = false;
+    }
+    if (valStatus === true && spelerY < groundHeight) {
+        spelerY = spelerY + 7; 
+    } else if (spelerY >= groundHeight) {
+        valStatus = false;
+    }
+}
 
 /**
  * Zoekt uit of de vijand is geraakt
