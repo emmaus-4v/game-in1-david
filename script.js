@@ -34,10 +34,12 @@ var vijandY = 0;   // y-positie van vijand
 var score = 0; // aantal behaalde punten
 
 var maxJumpHeight = 50;
-var jumpSpeed = 3;
+var jumpSpeed = 4;
 var valStatus = false;
 var springStatus = false;
 var groundHeight = 605;
+
+var bukStatus = false;
 
 
 
@@ -83,8 +85,14 @@ var tekenKogel = function(x, y) {
  * @param {number} y y-coördinaat
  */
 var tekenSpeler = function(x, y) {
-  fill("white");
-  rect(x, y, 40, 75);
+  if (bukStatus === false) {
+        fill("white");
+        rect(x, y, 40, 75);
+  }
+  if (bukStatus === true) {
+        fill("white");
+        rect(x, y + 35, 75, 40);
+  }
 };
 
 
@@ -109,28 +117,34 @@ var beweegKogel = function() {
  * Updatet globale variabele spelerX en spelerY
  */
 var beweegSpeler = function() {
-    if (springStatus === false) { // zodat maxJumpHeight alleen veranderd wordt als de speler op de grond staat
+    if (springStatus === false) { // zodat maxJumpHeight alleen veranderd wordt als de speler op de grond staat.
         maxJumpHeight = spelerY - 250;
     }
-    if (keyIsDown(32) && spelerY > maxJumpHeight && valStatus === false) { //als spatie wordt gedrukt spring je. Het zorgt er ook voor dat je niet kan springen in de lucht.
+    if (keyIsDown(32) && springStatus === false && valStatus === false) { //als spatie wordt gedrukt springt de speler. Het zorgt er ook voor dat je niet kan springen in de lucht.
         springStatus = true;
     } 
     if (springStatus === true) {
         spelerY = spelerY - Math.pow(jumpSpeed, 2); //speler springt. Hoe hoger hoe trager.
-        jumpSpeed = jumpSpeed - 0.03;
+        jumpSpeed = jumpSpeed - 0.075;
     }
-    if (spelerY <= maxJumpHeight) { // zodat je niet de atmosfeer in vliegt en dus valt
-        valStatus = true;
-        springStatus = false;
+    if (spelerY <= maxJumpHeight) { 
+        valStatus = true; // zodat de speler niet de atmosfeer in vliegt.
+        springStatus = false; // zodat de speler valt.
     }
-    if (valStatus === true && spelerY < groundHeight) { //speler valt. hoe lager hoe sneller.
+    if (valStatus === true && spelerY < groundHeight) { //speler valt. Hoe lager hoe sneller.
         spelerY = spelerY + Math.pow(jumpSpeed, 2); 
-        jumpSpeed = jumpSpeed + 0.03; 
+        jumpSpeed = jumpSpeed + 0.075; 
     }
-    if (spelerY >= groundHeight) { // zodat de speler niet door de grond valt en altijd op de beginplaats terugkomt.
-        valStatus = false;
-        jumpSpeed = 3;
-        spelerY = groundHeight;
+    if (spelerY >= groundHeight) { 
+        valStatus = false; // zodat de speler niet door de grond valt.
+        jumpSpeed = 4; // zodat de speler de volgende keer niet met een vreemde springsnelheid springt.
+        spelerY = groundHeight; // zodat de speler  altijd op de beginplaats terugkomt.
+    }
+    if (keyIsDown(16) && springStatus === false && valStatus === false) { // als je op shift drukt bukt de speler. Het zorgt er ook voor dat je niet tijdens het springen kan bukken.
+        bukStatus = true;
+        // snelheid van de blokken nog vertragen, zodat je niet oneindig lang kan sliden.
+    } else {
+        bukStatus = false;
     }
 }
 
