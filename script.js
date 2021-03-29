@@ -128,8 +128,8 @@ var beweegSpeler = function() {
         jumpSpeed = jumpSpeed - 0.075;
     }
     if (spelerY <= maxJumpHeight) { 
-        valStatus = true; // zodat de speler niet de atmosfeer in vliegt.
-        springStatus = false; // zodat de speler valt.
+        valStatus = true; // zodat de speler valt.
+        springStatus = false; // zodat de speler niet de atmosfeer in vliegt.
     }
     if (valStatus === true && spelerY < groundHeight) { //speler valt. Hoe lager hoe sneller.
         spelerY = spelerY + Math.pow(jumpSpeed, 2); 
