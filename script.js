@@ -91,7 +91,7 @@ var tekenSpeler = function(x, y) {
   }
   if (bukStatus === true) {
         fill("white");
-        rect(x, y + 35, 75, 40);
+        rect(x, y, 75, 40);
   }
 };
 
@@ -140,6 +140,7 @@ var beweegSpeler = function() {
         jumpSpeed = 4; // zodat de speler de volgende keer niet met een vreemde springsnelheid springt.
         spelerY = groundHeight; // zodat de speler  altijd op de beginplaats terugkomt.
     }
+    
     if (keyIsDown(16) && springStatus === false && valStatus === false) { // als je op shift drukt bukt de speler. Het zorgt er ook voor dat je niet tijdens het springen kan bukken.
         bukStatus = true;
         // snelheid van de blokken nog vertragen, zodat je niet oneindig lang kan sliden.
