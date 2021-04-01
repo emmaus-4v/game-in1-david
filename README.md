@@ -11,13 +11,11 @@ Basis: uitleg, spelen, afgaan en punten
 - [x] teken speler
 - [x] spring speler
 - [x] buk speler
-- [ ] punten op scherm zetten
-- [ ] punten kunnen scoren
-- [ ] uitlegscherm
-
-Uitbreiding: pacours
 - [ ] blokjes tekenen
 - [ ] gameover als speler blokje raakt
+- [ ] punten op scherm zetten
+- [ ] punten kunnen scoren
+- [ ] homescreen
 - [ ] verschillende blokjes/parcoursstukjes
 
 Uitbreiding: achtergrond en extra poppetjes

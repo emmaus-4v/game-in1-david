@@ -41,6 +41,9 @@ var groundHeight = 605;
 
 var bukStatus = false;
 
+var blokX = 1280;
+//var blokLocatie = [[1280],[605]]
+//var blokAfmeting = [[30],[30]]
 
 
 /* ********************************************* */
@@ -59,12 +62,13 @@ var tekenVeld = function () {
 
 /**
  * Tekent de vijand
- * @param {number} x x-coördinaat
+ * parameter weggehaald, vraag ernaar x-coördinaat
  * @param {number} y y-coördinaat
  */
-var tekenVijand = function(x, y) {
-    
-
+var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok, vraag hulp voor foutje met zwarte rand.
+    fill("red");
+    rect(blokX, y, widthBlok, heightBlok);
+    blokX = blokX - 1;
 };
 
 
@@ -91,7 +95,7 @@ var tekenSpeler = function(x, y) {
   }
   if (bukStatus === true) {
         fill("white");
-        rect(x, y, 75, 40);
+        rect(x, y + 35, 75, 40);
   }
 };
 
@@ -202,7 +206,6 @@ function setup() {
 function draw() {
   switch (spelStatus) {
     case SPELEN:
-    
       beweegVijand();
       beweegKogel();
       beweegSpeler();
@@ -218,7 +221,7 @@ function draw() {
       }
 
       tekenVeld();
-      tekenVijand(vijandX, vijandY);
+      tekenBlokje(605, 30, 30);
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
 
