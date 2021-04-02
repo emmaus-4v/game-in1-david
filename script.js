@@ -56,7 +56,7 @@ var blokX = 1280;
  */
 var tekenVeld = function () {
   fill("purple");
-  rect(20, 20, width - 2 * 20, height - 2 * 20);
+  rect(0, 0, width, height);
 };
 
 
@@ -68,7 +68,7 @@ var tekenVeld = function () {
 var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok, vraag hulp voor foutje met zwarte rand.
     fill("red");
     rect(blokX, y, widthBlok, heightBlok);
-    blokX = blokX - 1;
+    blokX = blokX - 5;
 };
 
 
@@ -221,7 +221,7 @@ function draw() {
       }
 
       tekenVeld();
-      tekenBlokje(605, 30, 30);
+      tekenBlokje(620, 60, 60);
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
 
