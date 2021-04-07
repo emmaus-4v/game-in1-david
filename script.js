@@ -24,6 +24,8 @@ var spelStatus = SPELEN;
 
 var spelerX = 63; // x-positie van speler
 var spelerY = 605; // y-positie van speler
+var spelerWidth = 40;
+var spelerHeight = 75;
 
 var kogelX = 0;    // x-positie van kogel
 var kogelY = 0;    // y-positie van kogel
@@ -42,6 +44,8 @@ var groundHeight = 605;
 var bukStatus = false;
 
 var blokX = 1280;
+var blokY = 620;
+var blokSpeed = 5;
 //var blokLocatie = [[1280],[605]]
 //var blokAfmeting = [[30],[30]]
 
@@ -68,7 +72,7 @@ var tekenVeld = function () {
 var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok, vraag hulp voor foutje met zwarte rand.
     fill("red");
     rect(blokX, y, widthBlok, heightBlok);
-    blokX = blokX - 5;
+    blokX = blokX - blokSpeed;
 };
 
 
@@ -90,12 +94,16 @@ var tekenKogel = function(x, y) {
  */
 var tekenSpeler = function(x, y) {
   if (bukStatus === false) {
+        spelerWidth = 40;
+        spelerHeight = 75;
         fill("white");
-        rect(x, y, 40, 75);
+        rect(x, y, spelerWidth, spelerHeight);
   }
   if (bukStatus === true) {
+        spelerWidth = 75;
+        spelerHeight = 40;
         fill("white");
-        rect(x, y + 35, 75, 40);
+        rect(x, y + 35, spelerWidth, spelerHeight);
   }
 };
 
@@ -147,9 +155,15 @@ var beweegSpeler = function() {
     
     if (keyIsDown(16) && springStatus === false && valStatus === false) { // als je op shift drukt bukt de speler. Het zorgt er ook voor dat je niet tijdens het springen kan bukken.
         bukStatus = true;
+        if (blokSpeed > 0.1) {
+        blokSpeed = blokSpeed - 0.1;
+        }
         // snelheid van de blokken nog vertragen, zodat je niet oneindig lang kan sliden.
     } else {
         bukStatus = false;
+        if (blokSpeed < 5) {
+        blokSpeed = blokSpeed + 0.1;
+        }
     }
 }
 
@@ -159,7 +173,7 @@ var beweegSpeler = function() {
  */
 var checkVijandGeraakt = function() {
 
-  return false;
+  return true;
 };
 
 
@@ -179,8 +193,9 @@ var checkSpelerGeraakt = function() {
  * @returns {boolean} true als het spel is afgelopen
  */
 var checkGameOver = function() {
-    
-  return false;
+   if (spelerX + spelerWidth >= blokX && spelerY + spelerHeight > blokY) {
+        return true;
+    }
 };
 
 
@@ -221,7 +236,7 @@ function draw() {
       }
 
       tekenVeld();
-      tekenBlokje(620, 60, 60);
+      tekenBlokje(blokY, 60, 60);
       tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
 
