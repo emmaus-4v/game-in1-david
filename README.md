@@ -11,15 +11,15 @@ Basis: uitleg, spelen, afgaan en punten
 - [x] teken speler
 - [x] spring speler
 - [x] buk speler
-- [ ] blokjes tekenen
-- [ ] gameover als speler blokje raakt
+- [x] blokjes tekenen
+- [x] gameover als speler blokje raakt
 - [ ] punten op scherm zetten
 - [ ] punten kunnen scoren
 - [ ] homescreen
 - [ ] verschillende blokjes/parcoursstukjes
 
 Uitbreiding: achtergrond en extra poppetjes
-- [ ] bewegende ahtergrond
+- [ ] bewegende achtergrond
 - [ ] nieuwe poppetjes maken
 - [ ] nieuwe poppetjes kunnen kiezen
 - [ ] details toevoegen

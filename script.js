@@ -68,11 +68,18 @@ var tekenVeld = function () {
  * Tekent de vijand
  * parameter weggehaald, vraag ernaar x-coördinaat
  * @param {number} y y-coördinaat
+ * @param {number} widthBlok breedte blokje
+ * @param {number} heightBlok hoogte blokje
  */
 var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok, vraag hulp voor foutje met zwarte rand.
     fill("red");
     rect(blokX, y, widthBlok, heightBlok);
-    blokX = blokX - blokSpeed;
+    if (spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60){
+        groundHeight = blokY - spelerHeight;
+    } else {
+        groundHeight = 605;
+    }
+
 };
 
 
@@ -111,8 +118,8 @@ var tekenSpeler = function(x, y) {
 /**
  * Updatet globale variabelen met positie van vijand of tegenspeler
  */
-var beweegVijand = function() {
-    
+var beweegBlokje = function() {
+    blokX = blokX - blokSpeed;
 };
 
 
@@ -139,7 +146,7 @@ var beweegSpeler = function() {
         spelerY = spelerY - Math.pow(jumpSpeed, 2); //speler springt. Hoe hoger hoe trager.
         jumpSpeed = jumpSpeed - 0.075;
     }
-    if (spelerY <= maxJumpHeight) { 
+    if (spelerY <= maxJumpHeight || (spelerY < groundHeight && springStatus === false)) { 
         valStatus = true; // zodat de speler valt.
         springStatus = false; // zodat de speler niet de atmosfeer in vliegt.
     }
@@ -193,7 +200,7 @@ var checkSpelerGeraakt = function() {
  * @returns {boolean} true als het spel is afgelopen
  */
 var checkGameOver = function() {
-   if (spelerX + spelerWidth >= blokX && spelerY + spelerHeight > blokY) {
+   if (spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60 && spelerY + spelerHeight > blokY && spelerY + spelerHeight < blokY + 60) {
         return true;
     }
 };
@@ -221,7 +228,7 @@ function setup() {
 function draw() {
   switch (spelStatus) {
     case SPELEN:
-      beweegVijand();
+      beweegBlokje();
       beweegKogel();
       beweegSpeler();
       
