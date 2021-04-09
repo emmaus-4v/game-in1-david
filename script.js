@@ -33,7 +33,8 @@ var kogelY = 0;    // y-positie van kogel
 var vijandX = 0;   // x-positie van vijand
 var vijandY = 0;   // y-positie van vijand
 
-var score = 0; // aantal behaalde punten
+var score = 0;
+var afstand = 0; // aantal behaalde punten
 
 var maxJumpHeight = 50;
 var jumpSpeed = 4;
@@ -74,7 +75,7 @@ var tekenVeld = function () {
 var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok, vraag hulp voor foutje met zwarte rand.
     fill("red");
     rect(blokX, y, widthBlok, heightBlok);
-    if (spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60){
+    if (spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60 && (springStatus === true || valStatus === true)){
         groundHeight = blokY - spelerHeight;
     } else {
         groundHeight = 605;
@@ -200,10 +201,16 @@ var checkSpelerGeraakt = function() {
  * @returns {boolean} true als het spel is afgelopen
  */
 var checkGameOver = function() {
-   if (spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60 && spelerY + spelerHeight > blokY && spelerY + spelerHeight < blokY + 60) {
+   if (spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60 && spelerY + spelerHeight > blokY && spelerY + spelerHeight < blokY + 61) {
         return true;
     }
 };
+ 
+var berekenPunten = function () {
+    round(afstand)
+    score = afstand;
+    return score;
+}
 
 
 /**
@@ -250,6 +257,14 @@ function draw() {
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
       }
+
+      afstand = afstand + 0.02 * blokSpeed;
+
+      berekenPunten();
+    
+      textSize(40);
+      text(score, 0, 30, 30, 40);
+
       break;
   }
 }
