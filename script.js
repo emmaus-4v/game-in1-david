@@ -75,7 +75,7 @@ var tekenVeld = function () {
 var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok, vraag hulp voor foutje met zwarte rand.
     fill("red");
     rect(blokX, y, widthBlok, heightBlok);
-    if (spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60 && (springStatus === true || valStatus === true)){
+    if (((spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60) || (spelerX >= blokX && spelerX <= blokX + 60)) && (springStatus === true || valStatus === true)){
         groundHeight = blokY - spelerHeight;
     } else {
         groundHeight = 605;
@@ -201,14 +201,13 @@ var checkSpelerGeraakt = function() {
  * @returns {boolean} true als het spel is afgelopen
  */
 var checkGameOver = function() {
-   if (spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60 && spelerY + spelerHeight > blokY && spelerY + spelerHeight < blokY + 61) {
+   if (((spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60) || (spelerX >= blokX && spelerX <= blokX + 60))  && ((spelerY + spelerHeight > blokY && spelerY + spelerHeight < blokY + 61) || (spelerY > blokY && spelerY < blokY + 61))) {
         return true;
     }
 };
  
 var berekenPunten = function () {
-    round(afstand)
-    score = afstand;
+    score = round(afstand);
     return score;
 }
 
