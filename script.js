@@ -263,7 +263,7 @@ function draw() {
     
       textSize(40);
       text(score, 0, 30, 30, 40);
-
+      
       break;
   }
 }
