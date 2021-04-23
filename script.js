@@ -45,7 +45,7 @@ var groundHeight = 605;
 var bukStatus = false;
 
 var blokX = 1280;
-var blokY = 605;
+var blokY = 550;
 var blokSpeed = 5;
 //var blokLocatie = [[1280],[605]]
 //var blokAfmeting = [[30],[30]]
@@ -203,7 +203,10 @@ var checkSpelerGeraakt = function() {
  * @returns {boolean} true als het spel is afgelopen
  */
 var checkGameOver = function() {
-   if (((spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60) || (spelerX >= blokX && spelerX <= blokX + 60))  && ((spelerY + spelerHeight > blokY && spelerY + spelerHeight < blokY + 61) || (spelerY > blokY && spelerY < blokY + 61))) {
+   if (bukStatus === false && (spelerX - blokX <= 60 && blokX - spelerX <= spelerWidth  && spelerY - blokY <= 59 && blokY - spelerY <= spelerHeight - 1)){
+        return true;
+    }
+    if (bukStatus === true && (spelerX - blokX <= 60 && blokX - spelerX <= spelerWidth  && spelerY + 35 - blokY <= 59 && blokY - spelerY + 35 <= spelerHeight - 1)){
         return true;
     }
 };

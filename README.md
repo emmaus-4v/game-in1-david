@@ -13,9 +13,9 @@ Basis: uitleg, spelen, afgaan en punten
 - [x] buk speler
 - [x] blokjes tekenen
 - [x] gameover als speler blokje raakt
-- [ ] punten op scherm zetten
-- [ ] punten kunnen scoren
-- [ ] homescreen
+- [x] punten op scherm zetten
+- [x] punten kunnen scoren
+- [ ] homescreen/endscreen
 - [ ] verschillende blokjes/parcoursstukjes
 
 Uitbreiding: achtergrond en extra poppetjes
