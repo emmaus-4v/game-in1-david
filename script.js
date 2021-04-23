@@ -45,7 +45,7 @@ var groundHeight = 605;
 var bukStatus = false;
 
 var blokX = 1280;
-var blokY = 620;
+var blokY = 605;
 var blokSpeed = 5;
 //var blokLocatie = [[1280],[605]]
 //var blokAfmeting = [[30],[30]]
@@ -72,11 +72,13 @@ var tekenVeld = function () {
  * @param {number} widthBlok breedte blokje
  * @param {number} heightBlok hoogte blokje
  */
-var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok, vraag hulp voor foutje met zwarte rand.
+var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok
     fill("red");
     rect(blokX, y, widthBlok, heightBlok);
-    if (((spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60) || (spelerX >= blokX && spelerX <= blokX + 60)) && (springStatus === true || valStatus === true)){
-        groundHeight = blokY - spelerHeight;
+    if ((spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60) || (spelerX >= blokX && spelerX <= blokX + 60)) {
+       if (springStatus === true || valStatus === true ) {
+           groundHeight = blokY - spelerHeight;
+       }
     } else {
         groundHeight = 605;
     }
