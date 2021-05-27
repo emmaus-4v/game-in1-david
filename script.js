@@ -27,11 +27,11 @@ var spelerY = 605; // y-positie van speler
 var spelerWidth = 40;
 var spelerHeight = 75;
 
-var kogelX = 0;    // x-positie van kogel
-var kogelY = 0;    // y-positie van kogel
+//var kogelX = 0;    // x-positie van kogel
+//var kogelY = 0;    // y-positie van kogel
 
-var vijandX = 0;   // x-positie van vijand
-var vijandY = 0;   // y-positie van vijand
+//var vijandX = 0;   // x-positie van vijand
+//var vijandY = 0;   // y-positie van vijand
 
 var score = 0;
 var afstand = 0; // aantal behaalde punten
@@ -46,7 +46,7 @@ var bukStatus = false;
 
 var blokX = 1280;
 var blokY = 550;
-var blokSpeed = 5;
+var blokSpeed = 5.025;
 //var blokLocatie = [[1280],[605]]
 //var blokAfmeting = [[30],[30]]
 
@@ -91,10 +91,10 @@ var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok
  * @param {number} x x-coördinaat
  * @param {number} y y-coördinaat
  */
-var tekenKogel = function(x, y) {
+/*var tekenKogel = function(x, y) {
 
 
-};
+};*/
 
 
 /**
@@ -129,9 +129,9 @@ var beweegBlokje = function() {
 /**
  * Updatet globale variabelen met positie van kogel of bal
  */
-var beweegKogel = function() {
+/*var beweegKogel = function() {
 
-};
+};*/
 
 
 /**
@@ -165,14 +165,14 @@ var beweegSpeler = function() {
     
     if (keyIsDown(16) && springStatus === false && valStatus === false) { // als je op shift drukt bukt de speler. Het zorgt er ook voor dat je niet tijdens het springen kan bukken.
         bukStatus = true;
-        if (blokSpeed > 0.1) {
-        blokSpeed = blokSpeed - 0.1;
+        if (blokSpeed > 0.075) {
+        blokSpeed = blokSpeed - 0.075;
         }
         // snelheid van de blokken nog vertragen, zodat je niet oneindig lang kan sliden.
     } else {
         bukStatus = false;
-        if (blokSpeed < 5) {
-        blokSpeed = blokSpeed + 0.1;
+        if (blokSpeed < 5.025) {
+        blokSpeed = blokSpeed + 0.075;
         }
     }
 }
@@ -181,10 +181,10 @@ var beweegSpeler = function() {
  * Zoekt uit of de vijand is geraakt
  * @returns {boolean} true als vijand is geraakt
  */
-var checkVijandGeraakt = function() {
+/*var checkVijandGeraakt = function() {
 
   return true;
-};
+};*/
 
 
 /**
@@ -192,10 +192,10 @@ var checkVijandGeraakt = function() {
  * bijvoorbeeld door botsing met vijand
  * @returns {boolean} true als speler is geraakt
  */
-var checkSpelerGeraakt = function() {
+/*var checkSpelerGeraakt = function() {
     
   return false;
-};
+};*/
 
 
 /**
@@ -214,6 +214,41 @@ var checkGameOver = function() {
 var berekenPunten = function () {
     score = round(afstand);
     return score;
+}
+
+var gameReset = function () {
+    spelerY = 605;
+    score = 0;
+    afstand = 0;
+    jumpSpeed = 4;
+    valStatus = false;
+    springStatus = false;
+    groundHeight = 605;
+    bukStatus = false;
+    blokX = 1280;
+    blokSpeed = 5.025;
+}
+
+var tekenVerliesScherm = function () {
+    fill('white');
+    rect(0, 0, 1280, 720);
+    fill('gray');
+    textSize(80);
+    text('YOU LOST', 440, 350)
+    var buttonText = ['restart', 'main menu'] 
+    for ( var i = 0; i < 2; i = i + 1) {
+        fill('gray');
+        textSize(40);
+        text(buttonText[i], 230 * i + 450 , 477);
+        noFill();
+        rect(270 * i + 380, 415, 250, 100);
+    }
+}
+
+var checkRestart = function () {
+    if (mouseX > 380 && mouseX < 630 && mouseY > 415 && mouseY < 665 && mouseIsPressed) {
+        return true;
+    }
 }
 
 
@@ -240,10 +275,10 @@ function draw() {
   switch (spelStatus) {
     case SPELEN:
       beweegBlokje();
-      beweegKogel();
+      //beweegKogel();
       beweegSpeler();
       
-      if (checkVijandGeraakt()) {
+      /*if (checkVijandGeraakt()) {
         // punten erbij
         // nieuwe vijand maken
       }
@@ -251,11 +286,11 @@ function draw() {
       if (checkSpelerGeraakt()) {
         // leven eraf of gezondheid verlagen
         // eventueel: nieuwe speler maken
-      }
+      }*/
 
       tekenVeld();
       tekenBlokje(blokY, 60, 60);
-      tekenKogel(kogelX, kogelY);
+      //tekenKogel(kogelX, kogelY);
       tekenSpeler(spelerX, spelerY);
 
       if (checkGameOver()) {
@@ -269,6 +304,18 @@ function draw() {
       textSize(40);
       text(score, 0, 30, 30, 40);
       
+      break;
+
+      case GAMEOVER:
+
+      gameReset();
+
+      tekenVerliesScherm();
+      
+      if (checkRestart()) {
+        spelStatus = SPELEN;
+      }
+
       break;
   }
 }
