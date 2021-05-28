@@ -82,7 +82,9 @@ var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok
     } else {
         groundHeight = 605;
     }
-
+    if (blokX + widthBlok < -100) {
+        blokX = 1280;
+    }
 };
 
 
@@ -165,7 +167,7 @@ var beweegSpeler = function() {
     
     if (keyIsDown(16) && springStatus === false && valStatus === false) { // als je op shift drukt bukt de speler. Het zorgt er ook voor dat je niet tijdens het springen kan bukken.
         bukStatus = true;
-        if (blokSpeed > 0.075) {
+        if (blokSpeed > 0) {
         blokSpeed = blokSpeed - 0.075;
         }
         // snelheid van de blokken nog vertragen, zodat je niet oneindig lang kan sliden.
