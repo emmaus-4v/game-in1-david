@@ -20,7 +20,7 @@
 const UITLEG = 0;
 const SPELEN = 1;
 const GAMEOVER = 2;
-var spelStatus = SPELEN;
+var spelStatus = UITLEG;
 
 var spelerX = 63; // x-positie van speler
 var spelerY = 605; // y-positie van speler
@@ -34,6 +34,8 @@ var spelerHeight = 75;
 //var vijandY = 0;   // y-positie van vijand
 
 var score = 0;
+var highscore = 0;
+var endscore = 0;
 var afstand = 0; // aantal behaalde punten
 
 var maxJumpHeight = 50;
@@ -49,6 +51,11 @@ var blokY = 550;
 var blokSpeed = 5.025;
 //var blokLocatie = [[1280],[605]]
 //var blokAfmeting = [[30],[30]]
+
+var controlScherm = false;
+
+var mouseIsClicked = false;
+var mouseWasClicked = false;
 
 
 /* ********************************************* */
@@ -237,8 +244,11 @@ var tekenVerliesScherm = function () {
     fill('gray');
     textSize(80);
     text('YOU LOST', 440, 350)
+    textSize(30);
+    text('Score:' + endscore, 450, 400);
+    text('Highscore:' + highscore, 680, 400);
     var buttonText = ['restart', 'main menu'] 
-    for ( var i = 0; i < 2; i = i + 1) {
+    for (var i = 0; i < 2; i = i + 1) {
         fill('gray');
         textSize(40);
         text(buttonText[i], 230 * i + 450 , 477);
@@ -247,12 +257,77 @@ var tekenVerliesScherm = function () {
     }
 }
 
-var checkRestart = function () {
-    if (mouseX > 380 && mouseX < 630 && mouseY > 415 && mouseY < 665 && mouseIsPressed) {
+var checkStart = function () {
+    if (mouseX > 380 && mouseX < 630 && mouseY > 415 && mouseY < 665 && mouseIsClicked === true) {
         return true;
     }
 }
 
+var tekenHomeScreen = function () {
+    fill('white');
+    rect(0, 0, 1280, 720);
+    fill('gray');
+    textSize(80);
+    text('Jumpin\' Jack', 410, 100)
+    textSize(30);
+    if (highscore > 0) {
+        text('Highscore:' + highscore, 560, 400)
+    }
+    var buttonText = ['play', 'controls'] 
+    for (var i = 0; i < 2; i = i + 1) {
+        fill('gray');
+        textSize(40);
+        text(buttonText[i], 230 * i + 470 , 477);
+        noFill();
+        rect(270 * i + 380, 415, 250, 100);
+    }
+} 
+
+var checkNewHighscore = function () {
+    if (endscore > highscore) {
+        highscore = endscore;
+    }
+}
+
+var checkControls = function () {
+    if (mouseX > 650 && mouseX < 900 && mouseY > 415 && mouseY < 665 && mouseIsClicked === true && spelStatus === UITLEG) {
+        controlScherm = true;
+    }
+    if (controlScherm === true) {
+        fill('white');
+        rect(1000, 250, 150, 90);
+        line(1000, 265, 1150, 265)
+        line(1137, 250, 1137, 265)
+        fill('gray');
+        textSize(16);
+        text('Controls', 1003, 263)
+        text('x', 1140, 262)
+        textSize(18);
+        text('Jump = Spacebar', 1003, 290)
+        text('Slide = Shift', 1003, 320)
+    }
+    if (mouseX > 1137 && mouseX < 1150 && mouseY > 250 && mouseY < 265 && mouseIsClicked === true) {
+        controlScherm = false;
+    }
+}
+
+var checkMainMenu = function () {
+    if (mouseX > 650 && mouseX < 900 && mouseY > 415 && mouseY < 665 && mouseIsClicked === true && spelStatus === GAMEOVER) {
+        return true;
+    }
+}
+
+var checkMouseIsClicked = function () {
+    if(mouseIsPressed && mouseIsClicked === false && mouseWasClicked === false) {
+        mouseIsClicked = true;
+    } else if (mouseIsPressed) {
+        mouseIsClicked = false;
+        mouseWasClicked = true;
+    } else {
+        mouseIsClicked = false;
+        mouseWasClicked = false;
+    }
+}
 
 /**
  * setup
@@ -275,6 +350,19 @@ function setup() {
  */
 function draw() {
   switch (spelStatus) {
+    case UITLEG:
+
+        tekenHomeScreen();
+
+        checkMouseIsClicked();
+
+        checkControls();
+
+        if (checkStart()) {
+            spelStatus = SPELEN;
+      }
+
+        break;
     case SPELEN:
       beweegBlokje();
       //beweegKogel();
@@ -297,6 +385,8 @@ function draw() {
 
       if (checkGameOver()) {
         spelStatus = GAMEOVER;
+        endscore = score;
+        checkNewHighscore();
       }
 
       afstand = afstand + 0.02 * blokSpeed;
@@ -304,7 +394,7 @@ function draw() {
       berekenPunten();
     
       textSize(40);
-      text(score, 0, 30, 30, 40);
+      text(score, 0, 30);
       
       break;
 
@@ -313,11 +403,17 @@ function draw() {
       gameReset();
 
       tekenVerliesScherm();
+
+      checkMouseIsClicked();
       
-      if (checkRestart()) {
-        spelStatus = SPELEN;
+      if (checkStart()) {
+            spelStatus = SPELEN;
+      }
+
+      if (checkMainMenu()) {
+            spelStatus = UITLEG;
       }
 
       break;
   }
-}
+} 
