@@ -83,7 +83,7 @@ var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok
     fill("red");
     rect(blokX, y, widthBlok, heightBlok);
     if ((spelerX + spelerWidth >= blokX && spelerX + spelerWidth <= blokX + 60) || (spelerX >= blokX && spelerX <= blokX + 60)) {
-       if (springStatus === true || valStatus === true ) {
+       if (spelerY + spelerHeight <= blokY) {
            groundHeight = blokY - spelerHeight;
        }
     } else {
