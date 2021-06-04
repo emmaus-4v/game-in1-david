@@ -82,7 +82,7 @@ var tekenVeld = function () {
  * @param {number} heightBlok hoogte blokje
  */
 var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok
-    for (var i = 0; i < i; i = i + 1) {
+    for (var i = 0; i < 3; i = i + 1) {
         fill("red");
         rect(blokX[i], y, widthBlok, heightBlok);
         if ((spelerX + spelerWidth >= blokX[i] && spelerX + spelerWidth <= blokX[i] + blokWidth) || (spelerX >= blokX[i] && spelerX <= blokX[i] + blokWidth)) {
@@ -100,7 +100,7 @@ var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok
              blokWidth = round(random(60, 150));
              blokHeight = round(random(60, 130));
              while (blokY + blokHeight > 680) {
-             blokHeight = round(random(60, 80));
+                blokHeight = round(random(60, 80));
             }
         }
     }
@@ -188,7 +188,7 @@ var beweegSpeler = function() {
     
     if (keyIsDown(16) && springStatus === false && valStatus === false) { // als je op shift drukt bukt de speler. Het zorgt er ook voor dat je niet tijdens het springen kan bukken.
         bukStatus = true;
-        if (blokSpeed > 0) {
+        if (blokSpeed > 0.) {
         blokSpeed = blokSpeed - 0.075;
         }
         // snelheid van de blokken nog vertragen, zodat je niet oneindig lang kan sliden.
@@ -251,14 +251,20 @@ var gameReset = function () {
          springStatus = false;
          groundHeight = 605;
          bukStatus = false;
-         blokX[i] = 1280;
+         if (i === 0) {
+             blokX[i] = 1280;
+         } else if (i === 1) {
+             blokX[i] = 1600;
+         } else if (i === 2) {
+             blokX[i] = 2060;
+         }
          blokSpeed = 5.025;
-         blokY = round(random(450, 600));
+        blokY = round(random(450, 600));
          blokWidth = round(random(60, 150));
          blokHeight = round(random(60, 130));
          while (blokY + blokHeight > 680) {
             blokHeight = round(random(60, 80));
-        }
+         }
     }
 }
 
