@@ -19,6 +19,7 @@ Basis: uitleg, spelen, afgaan en punten
 - [x] verschillende blokjes/parcoursstukjes
 
 Uitbreiding: achtergrond en extra poppetjes
+- [ ] graphics toevoegen
 - [ ] spel moeilijker maken
 - [ ] bewegende achtergrond
 - [ ] nieuwe poppetjes maken
