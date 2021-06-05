@@ -86,17 +86,17 @@ var tekenVeld = function () {
 var tekenBlokje = function() { // tekent blok
     fill("red");
     for (var i = 0; i < 3; i = i + 1) {
-    rect(blokX[i], blokY[i], blokWidth[i], blokHeight[i]);
-    if ((spelerX + spelerWidth >= blokX[actiefBlok] && spelerX + spelerWidth <= blokX[actiefBlok] + blokWidth[actiefBlok]) || (spelerX >= blokX[actiefBlok] && spelerX <= blokX[actiefBlok] + blokWidth[actiefBlok])) {
-        if (spelerY + spelerHeight <= blokY[actiefBlok] && bukStatus === false) {
-            groundHeight = blokY[actiefBlok] - spelerHeight;
-        } else if (spelerY + spelerHeight + 35 <= blokY[actiefBlok] && bukStatus === true) {
-            groundHeight = blokY[actiefBlok] - (spelerHeight + 35);
+        rect(blokX[i], blokY[i], blokWidth[i], blokHeight[i]);
+        if ((spelerX + spelerWidth >= blokX[actiefBlok] && spelerX + spelerWidth <= blokX[actiefBlok] + blokWidth[actiefBlok]) || (spelerX >= blokX[actiefBlok] && spelerX <= blokX[actiefBlok] + blokWidth[actiefBlok])) {
+            if (spelerY + spelerHeight <= blokY[actiefBlok] && bukStatus === false) {
+                groundHeight = blokY[actiefBlok] - spelerHeight;
+            } else if (spelerY + spelerHeight + 35 <= blokY[actiefBlok] && bukStatus === true) {
+                groundHeight = blokY[actiefBlok] - (spelerHeight + 35);
+            }
+        } else {
+            groundHeight = 605;
         }
-    } else {
-        groundHeight = 605;
-    }
-        if (blokX[i] + blokWidth[i] < -100) {
+        if (blokX[i] < -350) {
             blokX[i] = 1280;
             blokY[i] = round(random(430, 600));
             blokWidth[i] = round(random(60, 250));
@@ -106,6 +106,7 @@ var tekenBlokje = function() { // tekent blok
             }
         }
     }
+    text(actiefBlok, 50, 50);
 };
 
 
@@ -190,7 +191,7 @@ var beweegSpeler = function() {
     
     if (keyIsDown(16) && springStatus === false && valStatus === false) { // als je op shift drukt bukt de speler. Het zorgt er ook voor dat je niet tijdens het springen kan bukken.
         bukStatus = true;
-        if (blokSpeed > 0.) {
+        if (blokSpeed > 0) {
         blokSpeed = blokSpeed - 0.075;
         }
         // snelheid van de blokken nog vertragen, zodat je niet oneindig lang kan sliden.
@@ -290,7 +291,7 @@ var tekenVerliesScherm = function () {
 }
 
 var checkStart = function () {
-    if (mouseX > 380 && mouseX < 630 && mouseY > 415 && mouseY < 665 && mouseIsClicked === true) {
+    if (mouseX > 380 && mouseX < 630 && mouseY > 415 && mouseY < 515 && mouseIsClicked === true) {
         return true;
     }
 }
@@ -322,7 +323,7 @@ var checkNewHighscore = function () {
 }
 
 var checkControls = function () {
-    if (mouseX > 650 && mouseX < 900 && mouseY > 415 && mouseY < 665 && mouseIsClicked === true && spelStatus === UITLEG) {
+    if (mouseX > 650 && mouseX < 900 && mouseY > 415 && mouseY < 515 && mouseIsClicked === true && spelStatus === UITLEG) {
         controlScherm = true;
     }
     if (controlScherm === true) {
@@ -365,13 +366,13 @@ var checkBlokDichtstbij = function() {
     afstandBlok0 = blokX[0] - (spelerX + spelerWidth);
     afstandBlok1 = blokX[1] - (spelerX + spelerWidth);
     afstandBlok2 = blokX[2] - (spelerX + spelerWidth);
-    if (afstandBlok0 < afstandBlok1 && afstandBlok0 < afstandBlok2 && afstandBlok0 > 0) {
+    if (afstandBlok0 < afstandBlok1 && afstandBlok0 < afstandBlok2 && afstandBlok0 >= -1 * (blokWidth[0] + spelerWidth)) {
         actiefBlok = 0;
     }
-    if (afstandBlok1 < afstandBlok0 && afstandBlok1 < afstandBlok2 && afstandBlok1 > 0) {
+    if ((afstandBlok1 < afstandBlok0 || afstandBlok0 <= -1 * (blokWidth[0] + spelerWidth)) && afstandBlok1 < afstandBlok2 && afstandBlok1 >= -1 * (blokWidth[1] + spelerWidth)) {
         actiefBlok = 1;
     }
-    if (afstandBlok2 < afstandBlok0 && afstandBlok2 < afstandBlok1 && afstandBlok2 > 0) {
+    if (afstandBlok2 < afstandBlok0 && afstandBlok2 < afstandBlok1 && afstandBlok2 >= -1 * (blokWidth[2] + spelerWidth)) {
         actiefBlok = 2;
     }
 }
