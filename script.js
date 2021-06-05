@@ -99,7 +99,7 @@ var tekenBlokje = function() { // tekent blok
         if (blokX[i] + blokWidth[i] < -100) {
             blokX[i] = 1280;
             blokY[i] = round(random(430, 600));
-            blokWidth[i] = round(random(60, 150));
+            blokWidth[i] = round(random(60, 250));
             blokHeight[i] = round(random(60, 130));
             while (blokY[i] + blokHeight[i] > 680) {
                 blokHeight[i] = round(random(60, 80));
@@ -262,7 +262,7 @@ var gameReset = function () {
             }
             blokSpeed = 5.025;
             blokY[i] = round(random(450, 600));
-            blokWidth[i] = round(random(60, 150));
+            blokWidth[i] = round(random(60, 250));
             blokHeight[i] = round(random(60, 130));
             while (blokY[i] + blokHeight[i] > 680) {
                 blokHeight[i] = round(random(60, 80));
@@ -386,7 +386,7 @@ function setup() {
   createCanvas(1280, 720);
     for (var i = 0; i < 3; i = i + 1) {
   blokY[i] = round(random(450, 600));
-  blokWidth[i] = round(random(60, 150));
+  blokWidth[i] = round(random(60, 250));
   blokHeight[i] = round(random(60, 130));
    while (blokY[i] + blokHeight[i] > 680) {
        blokHeight[i] = round(random(60, 80));
