@@ -245,28 +245,28 @@ var berekenPunten = function () {
 
 var gameReset = function () {
      for (var i = 0; i < 3; i = i + 1) {
-         spelerY = 605;
-         score = 0;
-         afstand = 0;
-         jumpSpeed = 4;
-         valStatus = false;
-         springStatus = false;
-         groundHeight = 605;
-         bukStatus = false;
-         if (i === 0) {
-            blokX[i] = 1280;
-         } else if (i === 1) {
-            blokX[i] = 1600;
-         } else if (i === 2) {
-            blokX[i] = 2060;
-         }
-        blokSpeed = 5.025;
-        blokY[i] = round(random(450, 600));
-        blokWidth[i] = round(random(60, 150));
-        blokHeight[i] = round(random(60, 130));
-        while (blokY[i] + blokHeight[i] > 680) {
-            blokHeight[i] = round(random(60, 80));
-        }
+            spelerY = 605;
+            score = 0;
+            afstand = 0;
+            jumpSpeed = 4;
+            valStatus = false;
+            springStatus = false;
+            groundHeight = 605;
+            bukStatus = false;
+            if (i === 0) {
+                blokX[i] = 1280;
+            } else if (i === 1) {
+                blokX[i] = 1600;
+            } else if (i === 2) {
+                blokX[i] = 2060;
+            }
+            blokSpeed = 5.025;
+            blokY[i] = round(random(450, 600));
+            blokWidth[i] = round(random(60, 150));
+            blokHeight[i] = round(random(60, 130));
+            while (blokY[i] + blokHeight[i] > 680) {
+                blokHeight[i] = round(random(60, 80));
+            }
     }
 }
 
