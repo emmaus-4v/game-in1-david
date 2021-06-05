@@ -362,9 +362,9 @@ var checkMouseIsClicked = function () {
 }
 
 var checkBlokDichtstbij = function() {
-    afstandBlok0 = blokX[0] - spelerX;
-    afstandBlok1 = blokX[1] - spelerX;
-    afstandBlok2 = blokX[2] - spelerX;
+    afstandBlok0 = blokX[0] - (spelerX + spelerWidth);
+    afstandBlok1 = blokX[1] - (spelerX + spelerWidth);
+    afstandBlok2 = blokX[2] - (spelerX + spelerWidth);
     if (afstandBlok0 < afstandBlok1 && afstandBlok0 < afstandBlok2 && afstandBlok0 > 0) {
         actiefBlok = 0;
     }
