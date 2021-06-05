@@ -15,10 +15,11 @@ Basis: uitleg, spelen, afgaan en punten
 - [x] gameover als speler blokje raakt
 - [x] punten op scherm zetten
 - [x] punten kunnen scoren
-- [ ] homescreen/endscreen
-- [ ] verschillende blokjes/parcoursstukjes
+- [x] homescreen/endscreen
+- [x] verschillende blokjes/parcoursstukjes
 
 Uitbreiding: achtergrond en extra poppetjes
+. [ ] spel moeilijker maken
 - [ ] bewegende achtergrond
 - [ ] nieuwe poppetjes maken
 - [ ] nieuwe poppetjes kunnen kiezen

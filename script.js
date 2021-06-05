@@ -47,10 +47,15 @@ var groundHeight = 605;
 var bukStatus = false;
 
 var blokX = [1280, 1600, 2060];
-var blokY = 0;
+var blokY = [0, 0, 0];
 var blokSpeed = 5.025;
-var blokWidth = 0;
-var blokHeight = 0;
+var blokWidth = [0, 0, 0];
+var blokHeight = [0, 0, 0];
+
+var afstandBlok0;
+var afstandBlok1;
+var afstandBlok2;
+var actiefBlok;
 
 var controlScherm = false;
 
@@ -77,30 +82,27 @@ var tekenVeld = function () {
 /**
  * Tekent de vijand
  * parameter weggehaald, vraag ernaar x-coördinaat
- * @param {number} y y-coördinaat
- * @param {number} widthBlok breedte blokje
- * @param {number} heightBlok hoogte blokje
  */
-var tekenBlokje = function(y, widthBlok, heightBlok) { // tekent blok
+var tekenBlokje = function() { // tekent blok
+    fill("red");
     for (var i = 0; i < 3; i = i + 1) {
-        fill("red");
-        rect(blokX[i], y, widthBlok, heightBlok);
-        if ((spelerX + spelerWidth >= blokX[i] && spelerX + spelerWidth <= blokX[i] + blokWidth) || (spelerX >= blokX[i] && spelerX <= blokX[i] + blokWidth)) {
-           if (spelerY + spelerHeight <= blokY && bukStatus === false) {
-              groundHeight = blokY - spelerHeight;
-          } else if (spelerY + spelerHeight + 35 <= blokY && bukStatus === true) {
-              groundHeight = blokY - (spelerHeight + 35);
+    rect(blokX[i], blokY[i], blokWidth[i], blokHeight[i]);
+    if ((spelerX + spelerWidth >= blokX[actiefBlok] && spelerX + spelerWidth <= blokX[actiefBlok] + blokWidth[actiefBlok]) || (spelerX >= blokX[actiefBlok] && spelerX <= blokX[actiefBlok] + blokWidth[actiefBlok])) {
+        if (spelerY + spelerHeight <= blokY[actiefBlok] && bukStatus === false) {
+            groundHeight = blokY[actiefBlok] - spelerHeight;
+        } else if (spelerY + spelerHeight + 35 <= blokY[actiefBlok] && bukStatus === true) {
+            groundHeight = blokY[actiefBlok] - (spelerHeight + 35);
         }
-        } else {
-         groundHeight = 605;
-        }
-        if (blokX[i] + widthBlok < -100) {
-             blokX[i] = 1280;
-             blokY = round(random(430, 600));
-             blokWidth = round(random(60, 150));
-             blokHeight = round(random(60, 130));
-             while (blokY + blokHeight > 680) {
-                blokHeight = round(random(60, 80));
+    } else {
+        groundHeight = 605;
+    }
+        if (blokX[i] + blokWidth[i] < -100) {
+            blokX[i] = 1280;
+            blokY[i] = round(random(430, 600));
+            blokWidth[i] = round(random(60, 150));
+            blokHeight[i] = round(random(60, 130));
+            while (blokY[i] + blokHeight[i] > 680) {
+                blokHeight[i] = round(random(60, 80));
             }
         }
     }
@@ -227,10 +229,10 @@ var beweegSpeler = function() {
  */
 var checkGameOver = function() {
     for (var i = 0; i < 3; i = i + 1) {
-         if (bukStatus === false && (spelerX - blokX[i] <= blokWidth && blokX[i] - spelerX <= spelerWidth  && spelerY - blokY <= blokHeight - 1 && blokY - spelerY <= spelerHeight - 1)){
+         if (bukStatus === false && (spelerX - blokX[i] <= blokWidth[i] && blokX[i] - spelerX <= spelerWidth  && spelerY - blokY[i] <= blokHeight[i] - 1 && blokY[i] - spelerY <= spelerHeight - 1)){
             return true;
         }
-        if (bukStatus === true && (spelerX - blokX[i] <= blokWidth && blokX[i] - spelerX <= spelerWidth  && spelerY + 35 - blokY <= blokHeight - 1 && blokY - spelerY + 35 <= spelerHeight - 1)){
+        if (bukStatus === true && (spelerX - blokX[i] <= blokWidth[i] && blokX[i] - spelerX <= spelerWidth  && spelerY + 35 - blokY[i] <= blokHeight[i] - 1 && blokY[i] - spelerY + 35 <= spelerHeight - 1)){
             return true;
         }
     }
@@ -252,19 +254,19 @@ var gameReset = function () {
          groundHeight = 605;
          bukStatus = false;
          if (i === 0) {
-             blokX[i] = 1280;
+            blokX[i] = 1280;
          } else if (i === 1) {
-             blokX[i] = 1600;
+            blokX[i] = 1600;
          } else if (i === 2) {
-             blokX[i] = 2060;
+            blokX[i] = 2060;
          }
-         blokSpeed = 5.025;
-        blokY = round(random(450, 600));
-         blokWidth = round(random(60, 150));
-         blokHeight = round(random(60, 130));
-         while (blokY + blokHeight > 680) {
-            blokHeight = round(random(60, 80));
-         }
+        blokSpeed = 5.025;
+        blokY[i] = round(random(450, 600));
+        blokWidth[i] = round(random(60, 150));
+        blokHeight[i] = round(random(60, 130));
+        while (blokY[i] + blokHeight[i] > 680) {
+            blokHeight[i] = round(random(60, 80));
+        }
     }
 }
 
@@ -359,6 +361,21 @@ var checkMouseIsClicked = function () {
     }
 }
 
+var checkBlokDichtstbij = function() {
+    afstandBlok0 = blokX[0] - spelerX;
+    afstandBlok1 = blokX[1] - spelerX;
+    afstandBlok2 = blokX[2] - spelerX;
+    if (afstandBlok0 < afstandBlok1 && afstandBlok0 < afstandBlok2 && afstandBlok0 > 0) {
+        actiefBlok = 0;
+    }
+    if (afstandBlok1 < afstandBlok0 && afstandBlok1 < afstandBlok2 && afstandBlok1 > 0) {
+        actiefBlok = 1;
+    }
+    if (afstandBlok2 < afstandBlok0 && afstandBlok2 < afstandBlok1 && afstandBlok2 > 0) {
+        actiefBlok = 2;
+    }
+}
+
 /**
  * setup
  * de code in deze functie wordt één keer uitgevoerd door
@@ -367,13 +384,14 @@ var checkMouseIsClicked = function () {
 function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
   createCanvas(1280, 720);
-
-  blokY = round(random(450, 600));
-  blokWidth = round(random(60, 150));
-  blokHeight = round(random(60, 130));
-   while (blokY + blokHeight > 680) {
-       blokHeight = round(random(60, 80));
+    for (var i = 0; i < 3; i = i + 1) {
+  blokY[i] = round(random(450, 600));
+  blokWidth[i] = round(random(60, 150));
+  blokHeight[i] = round(random(60, 130));
+   while (blokY[i] + blokHeight[i] > 680) {
+       blokHeight[i] = round(random(60, 80));
    }
+    }
   // Kleur de achtergrond blauw, zodat je het kunt zien
   background('blue');
 }
@@ -400,6 +418,7 @@ function draw() {
 
         break;
     case SPELEN:
+        checkBlokDichtstbij()
       beweegBlokje();
       //beweegKogel();
       beweegSpeler();
@@ -416,7 +435,7 @@ function draw() {
 
       tekenVeld();
       tekenSpeler(spelerX, spelerY);
-      tekenBlokje(blokY, blokWidth, blokHeight);
+      tekenBlokje();
       //tekenKogel(kogelX, kogelY);
 
       if (checkGameOver()) {
