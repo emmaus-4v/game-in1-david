@@ -106,7 +106,6 @@ var tekenBlokje = function() { // tekent blok
             }
         }
     }
-    text(actiefBlok, 50, 50);
 };
 
 
