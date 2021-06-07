@@ -62,6 +62,18 @@ var controlScherm = false;
 var mouseIsClicked = false;
 var mouseWasClicked = false;
 
+var imgJack = 0;
+var imgJackSlide = 0;
+var imgBackground = 0;
+var imgGroundLinksBoven = 0;
+var imgGroundMiddenBoven = 0;
+var imgGroundRechtsBoven = 0;
+var imgGroundLinksOnder = 0;
+var imgGroundMiddenOnder = 0;
+var imgGroundRechtsOnder = 0;
+var imgGroundLinksMidden = 0;
+var imgGroundRechtsMidden = 0;
+var imgGroundMidden = 0;
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -72,10 +84,11 @@ var mouseWasClicked = false;
  * Tekent het speelveld
  */
 var tekenVeld = function () {
-  fill("purple");
+    image(imgBackground, 0, 0, width, height);
+  /*fill("purple");
   rect(0, 0, width, height);
   fill('brown');
-  rect(0, 680, width, height - 680);
+  rect(0, 680, width, height - 680);*/
 };
 
 
@@ -374,6 +387,21 @@ var checkBlokDichtstbij = function() {
     if (afstandBlok2 < afstandBlok0 && afstandBlok2 < afstandBlok1 && afstandBlok2 >= -1 * (blokWidth[2] + spelerWidth)) {
         actiefBlok = 2;
     }
+}
+
+function preload() {
+    imgJack = loadImage('jack_staan.gif')
+    imgJackSlide = loadImage('jack_slide.gif')
+    imgBackground = loadImage('background.gif')
+    imgGroundLinksBoven = loadImage('ground(links_boven).gif')
+    imgGroundMiddenBoven = loadImage('ground(midden_boven).gif')
+    imgGroundRechtsBoven = loadImage('ground(rechts_boven).gif')
+    imgGroundLinksOnder = loadImage('ground(links_onder).gif')
+    imgGroundMiddenOnder = loadImage('ground(midden_onder).gif')
+    imgGroundRechtsOnder = loadImage('ground(rechts_onder).gif')
+    imgGroundRechtsMidden = loadImage('ground(rechts_midden).gif')
+    imgGroundLinksMidden = loadImage('ground(links_midden).gif')
+    imgGroundMiddenBoven = loadImage('ground(midden).gif')
 }
 
 /**
