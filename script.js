@@ -390,18 +390,18 @@ var checkBlokDichtstbij = function() {
 }
 
 function preload() {
-    imgJack = loadImage('jack_staan.gif')
-    imgJackSlide = loadImage('jack_slide.gif')
-    imgBackground = loadImage('background.gif')
-    imgGroundLinksBoven = loadImage('ground(links_boven).gif')
-    imgGroundMiddenBoven = loadImage('ground(midden_boven).gif')
-    imgGroundRechtsBoven = loadImage('ground(rechts_boven).gif')
-    imgGroundLinksOnder = loadImage('ground(links_onder).gif')
-    imgGroundMiddenOnder = loadImage('ground(midden_onder).gif')
-    imgGroundRechtsOnder = loadImage('ground(rechts_onder).gif')
-    imgGroundRechtsMidden = loadImage('ground(rechts_midden).gif')
-    imgGroundLinksMidden = loadImage('ground(links_midden).gif')
-    imgGroundMiddenBoven = loadImage('ground(midden).gif')
+    imgJack = loadImage('./images/jack_staan.gif')
+    imgJackSlide = loadImage('./images/jack_slide.gif')
+    imgBackground = loadImage('./images/background.gif')
+    imgGroundLinksBoven = loadImage('./images/ground(links_boven).gif')
+    imgGroundMiddenBoven = loadImage('./images/ground(midden_boven).gif')
+    imgGroundRechtsBoven = loadImage('./images/ground(rechts_boven).gif')
+    imgGroundLinksOnder = loadImage('./images/ground(links_onder).gif')
+    imgGroundMiddenOnder = loadImage('./images/ground(midden_onder).gif')
+    imgGroundRechtsOnder = loadImage('./images/ground(rechts_onder).gif')
+    imgGroundRechtsMidden = loadImage('./images/ground(rechts_midden).gif')
+    imgGroundLinksMidden = loadImage('./images/ground(links_midden).gif')
+    imgGroundMiddenBoven = loadImage('./images/ground(midden).gif')
 }
 
 /**
