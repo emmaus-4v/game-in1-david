@@ -23,9 +23,9 @@ const GAMEOVER = 2;
 var spelStatus = UITLEG;
 
 var spelerX = 63; // x-positie van speler
-var spelerY = 605; // y-positie van speler
+var spelerY = 615; // y-positie van speler
 var spelerWidth = 40;
-var spelerHeight = 75;
+var spelerHeight = 65;
 
 //var kogelX = 0;    // x-positie van kogel
 //var kogelY = 0;    // y-positie van kogel
@@ -42,7 +42,7 @@ var maxJumpHeight = 50;
 var jumpSpeed = 4;
 var valStatus = false;
 var springStatus = false;
-var groundHeight = 605;
+var groundHeight = 615;
 
 var bukStatus = false;
 
@@ -51,6 +51,7 @@ var blokY = [0, 0, 0];
 var blokSpeed = 5.025;
 var blokWidth = [0, 0, 0];
 var blokHeight = [0, 0, 0];
+var blokAfmetingPool = [70, 140, 210, 280];
 
 var afstandBlok0;
 var afstandBlok1;
@@ -74,6 +75,10 @@ var imgGroundRechtsOnder = 0;
 var imgGroundLinksMidden = 0;
 var imgGroundRechtsMidden = 0;
 var imgGroundMidden = 0;
+var imgGroundSingleTileBoven = 0;
+var imgGroundSingleTileMidden = 0;
+var imgGroundSingleTileOnder = 0;
+var imgGroundSingleTile = 0;
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -107,13 +112,13 @@ var tekenBlokje = function() { // tekent blok
                 groundHeight = blokY[actiefBlok] - (spelerHeight + 35);
             }
         } else {
-            groundHeight = 605;
+            groundHeight = 615;
         }
         if (blokX[i] < -350) {
             blokX[i] = 1280;
             blokY[i] = round(random(430, 600));
-            blokWidth[i] = round(random(60, 250));
-            blokHeight[i] = round(random(60, 130));
+            blokWidth[i] = blokAfmetingPool[round(random(-0.5, 3.5))];
+            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 1.5))];
             while (blokY[i] + blokHeight[i] > 680) {
                 blokHeight[i] = round(random(60, 80));
             }
@@ -141,15 +146,15 @@ var tekenBlokje = function() { // tekent blok
 var tekenSpeler = function(x, y) {
   if (bukStatus === false) {
         spelerWidth = 40;
-        spelerHeight = 75;
+        spelerHeight = 65;
         fill("white");
-        rect(x, y, spelerWidth, spelerHeight);
+        image(imgJack, x - 15, y - 5, 70, 70);
   }
   if (bukStatus === true) {
-        spelerWidth = 75;
+        spelerWidth = 65;
         spelerHeight = 40;
         fill("white");
-        rect(x, y + 35, spelerWidth, spelerHeight);
+        image(imgJackSlide, x, y + 5, 70, 70);
   }
 };
 
@@ -188,8 +193,8 @@ var beweegSpeler = function() {
         jumpSpeed = jumpSpeed - 0.075;
     }
     if (spelerY <= maxJumpHeight || (spelerY < groundHeight && springStatus === false)) { 
-    valStatus = true; // zodat de speler valt.
-    springStatus = false; // zodat de speler niet de atmosfeer in vliegt.
+        valStatus = true; // zodat de speler valt.
+        springStatus = false; // zodat de speler niet de atmosfeer in vliegt.
     }
     if (valStatus === true && spelerY < groundHeight) { //speler valt. Hoe lager hoe sneller.
         spelerY = spelerY + Math.pow(jumpSpeed, 2); 
@@ -204,13 +209,13 @@ var beweegSpeler = function() {
     if (keyIsDown(16) && springStatus === false && valStatus === false) { // als je op shift drukt bukt de speler. Het zorgt er ook voor dat je niet tijdens het springen kan bukken.
         bukStatus = true;
         if (blokSpeed > 0) {
-        blokSpeed = blokSpeed - 0.075;
+            blokSpeed = blokSpeed - 0.075;
         }
         // snelheid van de blokken nog vertragen, zodat je niet oneindig lang kan sliden.
     } else {
         bukStatus = false;
         if (blokSpeed < 5.025) {
-        blokSpeed = blokSpeed + 0.075;
+            blokSpeed = blokSpeed + 0.075;
         }
     }
 }
@@ -258,13 +263,13 @@ var berekenPunten = function () {
 
 var gameReset = function () {
      for (var i = 0; i < 3; i = i + 1) {
-            spelerY = 605;
+            spelerY = 615;
             score = 0;
             afstand = 0;
             jumpSpeed = 4;
             valStatus = false;
             springStatus = false;
-            groundHeight = 605;
+            groundHeight = 615;
             bukStatus = false;
             if (i === 0) {
                 blokX[i] = 1280;
@@ -304,6 +309,14 @@ var tekenVerliesScherm = function () {
 
 var checkStart = function () {
     if (mouseX > 380 && mouseX < 630 && mouseY > 415 && mouseY < 515 && mouseIsClicked === true) {
+        for (var i = 0; i < 3; i = i + 1) {
+            blokY[i] = round(random(450, 600));
+            blokWidth[i] = blokAfmetingPool[round(random(-0.5, 3.5))];
+            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 1.5))];
+            while (blokY[i] + blokHeight[i] > 680) {
+                blokHeight[i] = round(random(60, 80));
+            }
+        }
         return true;
     }
 }
@@ -390,18 +403,22 @@ var checkBlokDichtstbij = function() {
 }
 
 function preload() {
-    imgJack = loadImage('./images/jack_staan.gif')
-    imgJackSlide = loadImage('./images/jack_slide.gif')
-    imgBackground = loadImage('./images/background.gif')
-    imgGroundLinksBoven = loadImage('./images/ground(links_boven).gif')
-    imgGroundMiddenBoven = loadImage('./images/ground(midden_boven).gif')
-    imgGroundRechtsBoven = loadImage('./images/ground(rechts_boven).gif')
-    imgGroundLinksOnder = loadImage('./images/ground(links_onder).gif')
-    imgGroundMiddenOnder = loadImage('./images/ground(midden_onder).gif')
-    imgGroundRechtsOnder = loadImage('./images/ground(rechts_onder).gif')
-    imgGroundRechtsMidden = loadImage('./images/ground(rechts_midden).gif')
-    imgGroundLinksMidden = loadImage('./images/ground(links_midden).gif')
-    imgGroundMiddenBoven = loadImage('./images/ground(midden).gif')
+    imgJack = loadImage('./images/jack_staan.gif');
+    imgJackSlide = loadImage('./images/jack_slide.gif');
+    imgBackground = loadImage('./images/background.gif');
+    imgGroundLinksBoven = loadImage('./images/ground(links_boven).gif');
+    imgGroundMiddenBoven = loadImage('./images/ground(midden_boven).gif');
+    imgGroundRechtsBoven = loadImage('./images/ground(rechts_boven).gif');
+    imgGroundLinksOnder = loadImage('./images/ground(links_onder).gif');
+    imgGroundMiddenOnder = loadImage('./images/ground(midden_onder).gif');
+    imgGroundRechtsOnder = loadImage('./images/ground(rechts_onder).gif');
+    imgGroundRechtsMidden = loadImage('./images/ground(rechts_midden).gif');
+    imgGroundLinksMidden = loadImage('./images/ground(links_midden).gif');
+    imgGroundMiddenBoven = loadImage('./images/ground(midden).gif');
+    imgGroundSingleTileBoven = loadImage('./images/ground(single_tile_boven).gif');
+    imgGroundSingleTileMidden = loadImage('./images/ground(single_tile_midden).gif');
+    imgGroundSingleTileOnder = loadImage('./images/ground(single_tile_onder).gif');
+    imgGroundSingleTile = loadimage('./images/ground(single_tile).gif');
 }
 
 /**
@@ -412,14 +429,7 @@ function preload() {
 function setup() {
   // Maak een canvas (rechthoek) waarin je je speelveld kunt tekenen
   createCanvas(1280, 720);
-    for (var i = 0; i < 3; i = i + 1) {
-  blokY[i] = round(random(450, 600));
-  blokWidth[i] = round(random(60, 250));
-  blokHeight[i] = round(random(60, 130));
-   while (blokY[i] + blokHeight[i] > 680) {
-       blokHeight[i] = round(random(60, 80));
-   }
-    }
+    
   // Kleur de achtergrond blauw, zodat je het kunt zien
   background('blue');
 }
