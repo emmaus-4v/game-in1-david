@@ -415,9 +415,9 @@ function preload() {
     imgGroundRechtsMidden = loadImage('./images/ground(rechts_midden).gif');
     imgGroundLinksMidden = loadImage('./images/ground(links_midden).gif');
     imgGroundMiddenBoven = loadImage('./images/ground(midden).gif');
-    imgGroundSingleTileBoven = loadImage('./images/ground(single_tile_boven).gif');
-    imgGroundSingleTileMidden = loadImage('./images/ground(single_tile_midden).gif');
-    imgGroundSingleTileOnder = loadImage('./images/ground(single_tile_onder).gif');
+    imgGroundSingleTileBoven = loadImage('./images/ground(single_tile_verticaal_boven).gif');
+    imgGroundSingleTileMidden = loadImage('./images/ground(single_tile_verticaal_midden).gif');
+    imgGroundSingleTileOnder = loadImage('./images/ground(single_tile_verticaal_onder).gif');
     imgGroundSingleTile = loadimage('./images/ground(single_tile).gif');
 }
 
