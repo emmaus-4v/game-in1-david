@@ -75,10 +75,13 @@ var imgGroundRechtsOnder = 0;
 var imgGroundLinksMidden = 0;
 var imgGroundRechtsMidden = 0;
 var imgGroundMidden = 0;
-var imgGroundSingleTileBoven = 0;
-var imgGroundSingleTileMidden = 0;
-var imgGroundSingleTileOnder = 0;
+var imgGroundSingleTileVerticaalBoven = 0;
+var imgGroundSingleTileVerticaalMidden = 0;
+var imgGroundSingleTileVerticaalOnder = 0;
 var imgGroundSingleTile = 0;
+var imgGroundSingleTileHorizontaalLinks = 0;
+var imgGroundSingleTileHorizontaalMidden = 0;
+var imgGroundSingleTileHorizontaalRechts = 0;
 
 /* ********************************************* */
 /*      functies die je gebruikt in je game      */
@@ -90,21 +93,63 @@ var imgGroundSingleTile = 0;
  */
 var tekenVeld = function () {
     image(imgBackground, 0, 0, width, height);
-  /*fill("purple");
-  rect(0, 0, width, height);
-  fill('brown');
-  rect(0, 680, width, height - 680);*/
 };
 
 
-/**
- * Tekent de vijand
- * parameter weggehaald, vraag ernaar x-coördinaat
- */
+
 var tekenBlokje = function() { // tekent blok
     fill("red");
     for (var i = 0; i < 3; i = i + 1) {
         rect(blokX[i], blokY[i], blokWidth[i], blokHeight[i]);
+        for (var k = 0; k < blokWidth[i]; k = k + 70) {
+            for(var l = 0; l < blokHeight[i]; l = l + 70) {
+                if(k === 0 && k + 70 === blokWidth[i] && l === 0 && l + 70 === blokHeight[i]) {
+                    image(imgGroundSingleTile, blokX[i], blokY[i], 70, 70);
+                } /*else if (k === 0 && k + 70 === blokWidth[i]) {
+                    if(l === 0) {
+                        image(imgGroundSingleTileVerticaalBoven, blokX[i], blokY[i] + l, 70, 70);
+                    } else if (l + 70 === blokHeight[i]) {
+                        image(imgGroundSingleTileVerticaalOnder, blokX[i], blokY[i] + l, 70, 70);
+                    } else {
+                        image(imgGroundSingleTileVerticaalMidden, blokX[i], blokY[i] + l, 70, 70);
+                    }
+                } */else if (l === 0 && l + 70 === blokHeight[i]) {
+                    if (k === 0) {
+                        image(imgGroundSingleTileHorizontaalLinks, blokX[i] + k, blokY[i], 70, 70);
+                    } else if (k + 70 === blokWidth[i]) {
+                        image(imgGroundSingleTileHorizontaalRechts, blokX[i] + k, blokY[i], 70, 70);
+                    } else {
+                        image(imgGroundSingleTileHorizontaalMidden, blokX[i] + k, blokY[i], 70, 70);
+                    }
+                } /*else {
+                    if (k === 0) {
+                        if(l === 0) {
+                            image(imgGroundLinksBoven, blokX[i] + k, blokY[i] + l, 70, 70);
+                        } else if (l + 70 === blokHeight[i]) {
+                            image(imgGroundLinksOnder, blokX[i] + k, blokY[i] + l, 70, 70);
+                        } else {
+                            image(imgGroundLinksMidden, blokX[i] + k, blokY[i] + l, 70, 70);
+                        }
+                    } else if (k + 70 === blokWidth[i]) {
+                        if(l === 0) {
+                            image(imgGroundRechtsBoven, blokX[i] + k, blokY[i] + l, 70, 70);
+                        } else if (l + 70 === blokHeight[i]) {
+                            image(imgGroundRechtsOnder, blokX[i] + k, blokY[i] + l, 70, 70);
+                        } else {
+                            image(imgGroundRechtsMidden, blokX[i] + k, blokY[i] + l, 70, 70);
+                        }
+                    } else {
+                        if(l === 0) {
+                            image(imgGroundMiddenBoven, blokX[i] + k, blokY[i] + l, 70, 70);
+                        } else if (l + 70 === blokHeight[i]) {
+                            image(imgGroundMiddenOnder, blokX[i] + k, blokY[i] + l, 70, 70);
+                        } else {
+                            image(imgGroundMidden, blokX[i] + k, blokY[i] + l, 70, 70);
+                        }
+                    }
+                }*/
+            }
+        }
         if ((spelerX + spelerWidth >= blokX[actiefBlok] && spelerX + spelerWidth <= blokX[actiefBlok] + blokWidth[actiefBlok]) || (spelerX >= blokX[actiefBlok] && spelerX <= blokX[actiefBlok] + blokWidth[actiefBlok])) {
             if (spelerY + spelerHeight <= blokY[actiefBlok] && bukStatus === false) {
                 groundHeight = blokY[actiefBlok] - spelerHeight;
@@ -415,10 +460,13 @@ function preload() {
     imgGroundRechtsMidden = loadImage('./images/ground(rechts_midden).gif');
     imgGroundLinksMidden = loadImage('./images/ground(links_midden).gif');
     imgGroundMiddenBoven = loadImage('./images/ground(midden).gif');
-    imgGroundSingleTileBoven = loadImage('./images/ground(single_tile_verticaal_boven).gif');
-    imgGroundSingleTileMidden = loadImage('./images/ground(single_tile_verticaal_midden).gif');
-    imgGroundSingleTileOnder = loadImage('./images/ground(single_tile_verticaal_onder).gif');
-    imgGroundSingleTile = loadimage('./images/ground(single_tile).gif');
+    imgGroundSingleTileVerticaalBoven = loadImage('./images/ground(single_tile_verticaal_boven).gif');
+    imgGroundSingleTileVerticaalMidden = loadImage('./images/ground(single_tile_verticaal_midden).gif');
+    imgGroundSingleTileVerticaalOnder = loadImage('./images/ground(single_tile_verticaal_onder).gif');
+    imgGroundSingleTile = loadImage('./images/ground(single_tile).gif');
+    imgGroundSingleTileHorizontaalLinks = loadImage('./images/ground(links_single_tile_horizontaal).gif');
+    imgGroundSingleTileHorizontaalMidden = loadImage('./images/ground(midden_single_tile_horizontaal).gif');
+    imgGroundSingleTileHorizontaalRechts = loadImage('./images/ground(rechts_single_tile_horizontaal).gif');
 }
 
 /**
