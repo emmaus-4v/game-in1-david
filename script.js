@@ -100,54 +100,53 @@ var tekenVeld = function () {
 var tekenBlokje = function() { // tekent blok
     fill("red");
     for (var i = 0; i < 3; i = i + 1) {
-        rect(blokX[i], blokY[i], blokWidth[i], blokHeight[i]);
         for (var k = 0; k < blokWidth[i]; k = k + 70) {
             for(var l = 0; l < blokHeight[i]; l = l + 70) {
                 if(k === 0 && k + 70 === blokWidth[i] && l === 0 && l + 70 === blokHeight[i]) {
                     image(imgGroundSingleTile, blokX[i], blokY[i], 70, 70);
-                } /*else if (k === 0 && k + 70 === blokWidth[i]) {
+                } else if (k === 0 && k + 70 === blokWidth[i]) {
                     if(l === 0) {
-                        image(imgGroundSingleTileVerticaalBoven, blokX[i], blokY[i] + l, 70, 70);
+                        image(imgGroundSingleTileVerticaalBoven, blokX[i], blokY[i] + l + 1, 70, 70);
                     } else if (l + 70 === blokHeight[i]) {
-                        image(imgGroundSingleTileVerticaalOnder, blokX[i], blokY[i] + l, 70, 70);
+                        image(imgGroundSingleTileVerticaalOnder, blokX[i], blokY[i] + l + 1, 70, 70);
                     } else {
-                        image(imgGroundSingleTileVerticaalMidden, blokX[i], blokY[i] + l, 70, 70);
+                        image(imgGroundSingleTileVerticaalMidden, blokX[i], blokY[i] + l + 1, 70, 70);
                     }
-                } */else if (l === 0 && l + 70 === blokHeight[i]) {
+                } else if (l === 0 && l + 70 === blokHeight[i]) {
                     if (k === 0) {
-                        image(imgGroundSingleTileHorizontaalLinks, blokX[i] + k, blokY[i], 70, 70);
+                        image(imgGroundSingleTileHorizontaalLinks, blokX[i] + k + 1, blokY[i], 70, 70);
                     } else if (k + 70 === blokWidth[i]) {
-                        image(imgGroundSingleTileHorizontaalRechts, blokX[i] + k, blokY[i], 70, 70);
+                        image(imgGroundSingleTileHorizontaalRechts, blokX[i] + k + 1, blokY[i], 70, 70);
                     } else {
-                        image(imgGroundSingleTileHorizontaalMidden, blokX[i] + k, blokY[i], 70, 70);
+                        image(imgGroundSingleTileHorizontaalMidden, blokX[i] + k + 1, blokY[i], 70, 70);
                     }
-                } /*else {
+                } else {
                     if (k === 0) {
                         if(l === 0) {
-                            image(imgGroundLinksBoven, blokX[i] + k, blokY[i] + l, 70, 70);
+                            image(imgGroundLinksBoven, blokX[i] + k + 1, blokY[i] + l + 1, 70, 70);
                         } else if (l + 70 === blokHeight[i]) {
-                            image(imgGroundLinksOnder, blokX[i] + k, blokY[i] + l, 70, 70);
+                            image(imgGroundLinksOnder, blokX[i] + k + 1, blokY[i] + l + 1, 70, 70);
                         } else {
-                            image(imgGroundLinksMidden, blokX[i] + k, blokY[i] + l, 70, 70);
+                            image(imgGroundLinksMidden, blokX[i] + k + 1, blokY[i] + l + 1, 70, 70);
                         }
                     } else if (k + 70 === blokWidth[i]) {
                         if(l === 0) {
-                            image(imgGroundRechtsBoven, blokX[i] + k, blokY[i] + l, 70, 70);
+                            image(imgGroundRechtsBoven, blokX[i] + k + 1, blokY[i] + l + 1, 70, 70);
                         } else if (l + 70 === blokHeight[i]) {
-                            image(imgGroundRechtsOnder, blokX[i] + k, blokY[i] + l, 70, 70);
+                            image(imgGroundRechtsOnder, blokX[i] + k + 1, blokY[i] + l + 1, 70, 70);
                         } else {
-                            image(imgGroundRechtsMidden, blokX[i] + k, blokY[i] + l, 70, 70);
+                            image(imgGroundRechtsMidden, blokX[i] + k + 1, blokY[i] + l + 1, 70, 70);
                         }
                     } else {
                         if(l === 0) {
-                            image(imgGroundMiddenBoven, blokX[i] + k, blokY[i] + l, 70, 70);
+                            image(imgGroundMiddenBoven, blokX[i] + k + 1, blokY[i] + l + 1, 70, 70);
                         } else if (l + 70 === blokHeight[i]) {
-                            image(imgGroundMiddenOnder, blokX[i] + k, blokY[i] + l, 70, 70);
+                            image(imgGroundMiddenOnder, blokX[i] + k + 1, blokY[i] + l + 1, 70, 70);
                         } else {
-                            image(imgGroundMidden, blokX[i] + k, blokY[i] + l, 70, 70);
+                            image(imgGroundMidden, blokX[i] + k + 1, blokY[i] + l + 1, 70, 70);
                         }
                     }
-                }*/
+                }
             }
         }
         if ((spelerX + spelerWidth >= blokX[actiefBlok] && spelerX + spelerWidth <= blokX[actiefBlok] + blokWidth[actiefBlok]) || (spelerX >= blokX[actiefBlok] && spelerX <= blokX[actiefBlok] + blokWidth[actiefBlok])) {
@@ -161,11 +160,11 @@ var tekenBlokje = function() { // tekent blok
         }
         if (blokX[i] < -350) {
             blokX[i] = 1280;
-            blokY[i] = round(random(430, 600));
+            blokY[i] = round(random(450, 600));
             blokWidth[i] = blokAfmetingPool[round(random(-0.5, 3.5))];
-            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 1.5))];
+            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 2.5))];
             while (blokY[i] + blokHeight[i] > 680) {
-                blokHeight[i] = round(random(60, 80));
+                blokHeight[i] = blokAfmetingPool[round(random(-0.5, 1.5))];
             }
         }
     }
@@ -228,7 +227,7 @@ var beweegBlokje = function() {
  */
 var beweegSpeler = function() {
     if (springStatus === false) { // zodat maxJumpHeight alleen veranderd wordt als de speler op de grond staat.
-        maxJumpHeight = spelerY - 250;
+        maxJumpHeight = spelerY - 270;
     }
     if (keyIsDown(32) && springStatus === false && valStatus === false) { //als spatie wordt gedrukt springt de speler. Het zorgt er ook voor dat je niet kan springen in de lucht.
         springStatus = true;
@@ -325,10 +324,10 @@ var gameReset = function () {
             }
             blokSpeed = 5.025;
             blokY[i] = round(random(450, 600));
-            blokWidth[i] = round(random(60, 250));
-            blokHeight[i] = round(random(60, 130));
+            blokWidth[i] = blokAfmetingPool[round(random(-0.5, 3.5))];
+            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 2.5))];
             while (blokY[i] + blokHeight[i] > 680) {
-                blokHeight[i] = round(random(60, 80));
+                blokHeight[i] = blokAfmetingPool[round(random(-0.5, 1.5))];
             }
     }
 }
@@ -357,9 +356,9 @@ var checkStart = function () {
         for (var i = 0; i < 3; i = i + 1) {
             blokY[i] = round(random(450, 600));
             blokWidth[i] = blokAfmetingPool[round(random(-0.5, 3.5))];
-            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 1.5))];
+            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 2.5))];
             while (blokY[i] + blokHeight[i] > 680) {
-                blokHeight[i] = round(random(60, 80));
+                blokHeight[i] = blokAfmetingPool[round(random(-0.5, 1.5))];
             }
         }
         return true;
@@ -459,7 +458,8 @@ function preload() {
     imgGroundRechtsOnder = loadImage('./images/ground(rechts_onder).gif');
     imgGroundRechtsMidden = loadImage('./images/ground(rechts_midden).gif');
     imgGroundLinksMidden = loadImage('./images/ground(links_midden).gif');
-    imgGroundMiddenBoven = loadImage('./images/ground(midden).gif');
+    imgGroundMiddenBoven = loadImage('./images/ground(midden_boven).gif');
+    imgGroundMidden = loadImage('./images/ground(midden).gif');
     imgGroundSingleTileVerticaalBoven = loadImage('./images/ground(single_tile_verticaal_boven).gif');
     imgGroundSingleTileVerticaalMidden = loadImage('./images/ground(single_tile_verticaal_midden).gif');
     imgGroundSingleTileVerticaalOnder = loadImage('./images/ground(single_tile_verticaal_onder).gif');
