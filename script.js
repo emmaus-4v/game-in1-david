@@ -189,15 +189,17 @@ var tekenBlokje = function() { // tekent blok
  */
 var tekenSpeler = function(x, y) {
   if (bukStatus === false) {
-        spelerWidth = 40;
+        spelerWidth = 35;
         spelerHeight = 65;
         fill("white");
+        rect(x, y, spelerWidth, spelerHeight);
         image(imgJack, x - 15, y - 5, 70, 70);
   }
   if (bukStatus === true) {
         spelerWidth = 65;
-        spelerHeight = 40;
+        spelerHeight = 45;
         fill("white");
+        rect(x, y + 20, spelerWidth, spelerHeight);
         image(imgJackSlide, x, y + 5, 70, 70);
   }
 };
@@ -294,7 +296,7 @@ var checkGameOver = function() {
          if (bukStatus === false && (spelerX - blokX[i] <= blokWidth[i] && blokX[i] - spelerX <= spelerWidth  && spelerY - blokY[i] <= blokHeight[i] - 1 && blokY[i] - spelerY <= spelerHeight - 1)){
             return true;
         }
-        if (bukStatus === true && (spelerX - blokX[i] <= blokWidth[i] && blokX[i] - spelerX <= spelerWidth  && spelerY + 35 - blokY[i] <= blokHeight[i] - 1 && blokY[i] - spelerY + 35 <= spelerHeight - 1)){
+        if (bukStatus === true && (spelerX - blokX[i] <= blokWidth[i] && blokX[i] - spelerX <= spelerWidth  && spelerY + 20 - blokY[i] <= blokHeight[i] - 1 && blokY[i] - spelerY + 20 <= spelerHeight - 1)){
             return true;
         }
     }
@@ -333,9 +335,8 @@ var gameReset = function () {
 }
 
 var tekenVerliesScherm = function () {
-    fill('white');
-    rect(0, 0, 1280, 720);
-    fill('gray');
+    image(imgBackground, 0, 0, width, height);
+    fill('black');
     textSize(80);
     text('YOU LOST', 440, 350)
     textSize(30);
@@ -343,7 +344,7 @@ var tekenVerliesScherm = function () {
     text('Highscore:' + highscore, 680, 400);
     var buttonText = ['restart', 'main menu'] 
     for (var i = 0; i < 2; i = i + 1) {
-        fill('gray');
+        fill('black');
         textSize(40);
         text(buttonText[i], 230 * i + 450 , 477);
         noFill();
@@ -366,9 +367,8 @@ var checkStart = function () {
 }
 
 var tekenHomeScreen = function () {
-    fill('white');
-    rect(0, 0, 1280, 720);
-    fill('gray');
+    image(imgBackground, 0, 0, width, height);
+    fill('black');
     textSize(80);
     text('Jumpin\' Jack', 410, 100)
     textSize(30);
@@ -377,7 +377,7 @@ var tekenHomeScreen = function () {
     }
     var buttonText = ['play', 'controls'] 
     for (var i = 0; i < 2; i = i + 1) {
-        fill('gray');
+        fill('black');
         textSize(40);
         text(buttonText[i], 230 * i + 470 , 477);
         noFill();
@@ -396,11 +396,11 @@ var checkControls = function () {
         controlScherm = true;
     }
     if (controlScherm === true) {
-        fill('white');
+        noFill();
         rect(1000, 250, 150, 90);
         line(1000, 265, 1150, 265)
         line(1137, 250, 1137, 265)
-        fill('gray');
+        fill('black');
         textSize(16);
         text('Controls', 1003, 263)
         text('x', 1140, 262)
