@@ -27,12 +27,6 @@ var spelerY = 615; // y-positie van speler
 var spelerWidth = 40;
 var spelerHeight = 65;
 
-//var kogelX = 0;    // x-positie van kogel
-//var kogelY = 0;    // y-positie van kogel
-
-//var vijandX = 0;   // x-positie van vijand
-//var vijandY = 0;   // y-positie van vijand
-
 var score = 0;
 var highscore = 0;
 var endscore = 0;
@@ -172,17 +166,6 @@ var tekenBlokje = function() { // tekent blok
 
 
 /**
- * Tekent de kogel of de bal
- * @param {number} x x-coördinaat
- * @param {number} y y-coördinaat
- */
-/*var tekenKogel = function(x, y) {
-
-
-};*/
-
-
-/**
  * Tekent de speler
  * @param {number} x x-coördinaat
  * @param {number} y y-coördinaat
@@ -192,14 +175,12 @@ var tekenSpeler = function(x, y) {
         spelerWidth = 35;
         spelerHeight = 65;
         fill("white");
-        rect(x, y, spelerWidth, spelerHeight);
         image(imgJack, x - 15, y - 5, 70, 70);
   }
   if (bukStatus === true) {
         spelerWidth = 65;
         spelerHeight = 45;
         fill("white");
-        rect(x, y + 20, spelerWidth, spelerHeight);
         image(imgJackSlide, x, y + 5, 70, 70);
   }
 };
@@ -213,14 +194,6 @@ var beweegBlokje = function() {
         blokX[i] = blokX[i] - blokSpeed;
     }
 };
-
-
-/**
- * Updatet globale variabelen met positie van kogel of bal
- */
-/*var beweegKogel = function() {
-
-};*/
 
 
 /**
@@ -266,26 +239,6 @@ var beweegSpeler = function() {
     }
 }
 
-/**
- * Zoekt uit of de vijand is geraakt
- * @returns {boolean} true als vijand is geraakt
- */
-/*var checkVijandGeraakt = function() {
-
-  return true;
-};*/
-
-
-/**
- * Zoekt uit of de speler is geraakt
- * bijvoorbeeld door botsing met vijand
- * @returns {boolean} true als speler is geraakt
- */
-/*var checkSpelerGeraakt = function() {
-    
-  return false;
-};*/
-
 
 /**
  * Zoekt uit of het spel is afgelopen
@@ -308,29 +261,30 @@ var berekenPunten = function () {
 }
 
 var gameReset = function () {
-     for (var i = 0; i < 3; i = i + 1) {
-            spelerY = 615;
-            score = 0;
-            afstand = 0;
-            jumpSpeed = 4;
-            valStatus = false;
-            springStatus = false;
-            groundHeight = 615;
-            bukStatus = false;
-            if (i === 0) {
-                blokX[i] = 1280;
-            } else if (i === 1) {
-                blokX[i] = 1600;
-            } else if (i === 2) {
-                blokX[i] = 2060;
-            }
-            blokSpeed = 5.025;
-            blokY[i] = round(random(450, 600));
-            blokWidth[i] = blokAfmetingPool[round(random(-0.5, 3.5))];
-            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 2.5))];
-            while (blokY[i] + blokHeight[i] > 680) {
-                blokHeight[i] = blokAfmetingPool[round(random(-0.5, 1.5))];
-            }
+    spelerY = 615;
+    score = 0;
+    afstand = 0;
+    jumpSpeed = 4;
+    valStatus = false;
+    springStatus = false;
+    groundHeight = 615;
+    bukStatus = false;
+    controlScherm = false;
+    blokSpeed = 5.025;
+    for (var i = 0; i < 3; i = i + 1) {
+        if (i === 0) {
+            blokX[i] = 1280;
+        } else if (i === 1) {
+            blokX[i] = 1600;
+        } else if (i === 2) {
+            blokX[i] = 2060;
+        }
+        blokY[i] = round(random(450, 600));
+        blokWidth[i] = blokAfmetingPool[round(random(-0.5, 3.5))];
+        blokHeight[i] = blokAfmetingPool[round(random(-0.5, 2.5))];
+        while (blokY[i] + blokHeight[i] > 680) {
+            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 1.5))];
+        }
     }
 }
 
@@ -347,30 +301,28 @@ var tekenVerliesScherm = function () {
         fill('black');
         textSize(40);
         text(buttonText[i], 230 * i + 450 , 477);
-        noFill();
+        if (mouseX > 270 * i + 380 && mouseX < 270 * i + 630 && mouseY > 415 && mouseY < 515) {
+           fill("rgba(0, 0, 0, 0.2)"); 
+        } else {
+            noFill();
+        }
         rect(270 * i + 380, 415, 250, 100);
     }
 }
 
 var checkStart = function () {
     if (mouseX > 380 && mouseX < 630 && mouseY > 415 && mouseY < 515 && mouseIsClicked === true) {
-        for (var i = 0; i < 3; i = i + 1) {
-            blokY[i] = round(random(450, 600));
-            blokWidth[i] = blokAfmetingPool[round(random(-0.5, 3.5))];
-            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 2.5))];
-            while (blokY[i] + blokHeight[i] > 680) {
-                blokHeight[i] = blokAfmetingPool[round(random(-0.5, 1.5))];
-            }
-        }
+        gameReset();
         return true;
     }
 }
 
 var tekenHomeScreen = function () {
     image(imgBackground, 0, 0, width, height);
-    fill('black');
+    fill('rgb(255, 127, 0)');
     textSize(80);
     text('Jumpin\' Jack', 410, 100)
+    fill('black');
     textSize(30);
     if (highscore > 0) {
         text('Highscore:' + highscore, 560, 400)
@@ -380,7 +332,11 @@ var tekenHomeScreen = function () {
         fill('black');
         textSize(40);
         text(buttonText[i], 230 * i + 470 , 477);
-        noFill();
+        if (mouseX > 270 * i + 380 && mouseX < 270 * i + 630 && mouseY > 415 && mouseY < 515) {
+            fill("rgba(0, 0, 0, 0.2)"); 
+        } else {
+            noFill();
+        }
         rect(270 * i + 380, 415, 250, 100);
     }
 } 
@@ -396,6 +352,13 @@ var checkControls = function () {
         controlScherm = true;
     }
     if (controlScherm === true) {
+        if (mouseX > 1137 && mouseX < 1150 && mouseY > 250 && mouseY < 265) {
+            fill('red');
+            rect(1137, 250, 14, 14);
+            if (mouseIsClicked === true) {
+                controlScherm = false;
+            }
+        }
         noFill();
         rect(1000, 250, 150, 90);
         line(1000, 265, 1150, 265)
@@ -403,13 +366,10 @@ var checkControls = function () {
         fill('black');
         textSize(16);
         text('Controls', 1003, 263)
-        text('x', 1140, 262)
         textSize(18);
         text('Jump = Spacebar', 1003, 290)
         text('Slide = Shift', 1003, 320)
-    }
-    if (mouseX > 1137 && mouseX < 1150 && mouseY > 250 && mouseY < 265 && mouseIsClicked === true) {
-        controlScherm = false;
+        text('x', 1140, 262)
     }
 }
 
@@ -480,6 +440,8 @@ function setup() {
     
   // Kleur de achtergrond blauw, zodat je het kunt zien
   background('blue');
+
+  strokeWeight(3);
 }
 
 
@@ -500,62 +462,48 @@ function draw() {
 
         if (checkStart()) {
             spelStatus = SPELEN;
-      }
+        }
 
         break;
     case SPELEN:
         checkBlokDichtstbij()
-      beweegBlokje();
-      //beweegKogel();
-      beweegSpeler();
-      
-      /*if (checkVijandGeraakt()) {
-        // punten erbij
-        // nieuwe vijand maken
-      }
-      
-      if (checkSpelerGeraakt()) {
-        // leven eraf of gezondheid verlagen
-        // eventueel: nieuwe speler maken
-      }*/
+        beweegBlokje();
+        beweegSpeler();
 
-      tekenVeld();
-      tekenSpeler(spelerX, spelerY);
-      tekenBlokje();
-      //tekenKogel(kogelX, kogelY);
+        tekenVeld();
+        tekenSpeler(spelerX, spelerY);
+        tekenBlokje();
 
-      if (checkGameOver()) {
-        spelStatus = GAMEOVER;
-        endscore = score;
-        checkNewHighscore();
-      }
+        if (checkGameOver()) {
+            spelStatus = GAMEOVER;
+            endscore = score;
+            checkNewHighscore();
+        }
 
-      afstand = afstand + 0.02 * blokSpeed;
+        afstand = afstand + 0.02 * blokSpeed;
 
-      berekenPunten();
-    
-      textSize(40);
-      fill('white');
-      text(score, 0, 30);
-      
-      break;
+        berekenPunten();
+        
+        textSize(40);
+        fill('white');
+        text('points: ' + score, 0, 30);
+        
+        break;
 
-      case GAMEOVER:
+    case GAMEOVER:
 
-      gameReset();
+        tekenVerliesScherm();
 
-      tekenVerliesScherm();
-
-      checkMouseIsClicked();
-      
-      if (checkStart()) {
+        checkMouseIsClicked();
+        
+        if (checkStart()) {
             spelStatus = SPELEN;
-      }
+        }
 
-      if (checkMainMenu()) {
+        if (checkMainMenu()) {
             spelStatus = UITLEG;
-      }
+        }
 
-      break;
-  }
+        break;
+    }
 } 
