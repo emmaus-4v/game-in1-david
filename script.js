@@ -22,41 +22,42 @@ const SPELEN = 1;
 const GAMEOVER = 2;
 var spelStatus = UITLEG;
 
-var spelerX = 63; // x-positie van speler
-var spelerY = 615; // y-positie van speler
-var spelerWidth = 40;
-var spelerHeight = 65;
+var spelerX = 63; // x-positie van speler.
+var spelerY = 615; // y-positie van speler.
+var spelerWidth = 40; // breedte van speler.
+var spelerHeight = 65; // hoogte van speler.
 
-var score = 0;
-var highscore = 0;
-var endscore = 0;
-var afstand = 0; // aantal behaalde punten
+var score = 0; // de score.
+var highscore = 0; // de hoogst score behaald.
+var afstand = 0; // de afstand, hiervan is de score afhankelijk.
 
-var maxJumpHeight = 50;
-var jumpSpeed = 4;
-var valStatus = false;
-var springStatus = false;
-var groundHeight = 615;
+var maxJumpHeight = 0; // de maximale hoogte tot waar je kan springen.
+var jumpSpeed = 4; // de snelheid waarmee je omhoog gaat.
+var valStatus = false; // geeft aan of je valt.
+var springStatus = false; // geeft aan of je soringt.
+var groundHeight = 615; // de hoogte waarop de speler staat.
 
-var bukStatus = false;
+var bukStatus = false; // geeft aan of de speler bukt.
 
-var blokX = [1280, 1600, 2060];
-var blokY = [0, 0, 0];
-var blokSpeed = 5.025;
-var blokWidth = [0, 0, 0];
-var blokHeight = [0, 0, 0];
-var blokAfmetingPool = [70, 140, 210, 280];
+var blokX = [1280, 1600, 2060]; // de x-coördinaten van de blokken.
+var blokY = [0, 0, 0]; // de y-coördinaten van de blokken.
+var blokSpeed = 5.025; // de snelheid waarmee het blok beweegt.
+var blokWidth = [0, 0, 0]; // de breedte van de blokken.
+var blokHeight = [0, 0, 0]; // de hoogte van de blokken.
+var blokAfmetingPool = [70, 140, 210, 280]; // waardes die de hoogte en de breedte van de blokken kunnen zijn.
 
-var afstandBlok0;
-var afstandBlok1;
-var afstandBlok2;
-var actiefBlok;
+var afstandBlok0; //afstand van het eerste blok tot de speler.
+var afstandBlok1; //afstand van het tweede blok tot de speler.
+var afstandBlok2; //afstand van het derde blok tot de speler.
+var actiefBlok; // het blok dat het dichtsbij de speler is. Hiermee zorg ik ervoor dat een bepaald stukje code goed loopt.
 
-var controlScherm = false;
+var controlScherm = false; // bepaalt of het scherm met de controles van het spel moet worden getekend of niet.
 
-var mouseIsClicked = false;
-var mouseWasClicked = false;
+//met de volgende twee variabelen zorg ik ervoor dat je maar een output krijgt als de muis wordt ingedrukt.
+var mouseIsClicked = false; // of de muis is geklikt.
+var mouseWasClicked = false; // of de muis was geklikt.
 
+// de volgende variabelen zijn de afbeeldingen
 var imgJack = 0;
 var imgJackSlide = 0;
 var imgBackground = 0;
@@ -90,11 +91,13 @@ var tekenVeld = function () {
 };
 
 
-
-var tekenBlokje = function() { // tekent blok
+/**
+ * Tekent de blokken
+ */
+var tekenBlokje = function() {
     fill("red");
-    for (var i = 0; i < 3; i = i + 1) {
-        for (var k = 0; k < blokWidth[i]; k = k + 70) {
+    for (var i = 0; i < 3; i = i + 1) { // zodat de code voor alle drie de blokken wordt uitgevoerd
+        for (var k = 0; k < blokWidth[i]; k = k + 70) { // deze gigantische for-loop met absurd veel if-jes zorgt er voor dat ieder blokje de juiste graphics heeft.
             for(var l = 0; l < blokHeight[i]; l = l + 70) {
                 if(k === 0 && k + 70 === blokWidth[i] && l === 0 && l + 70 === blokHeight[i]) {
                     image(imgGroundSingleTile, blokX[i], blokY[i], 70, 70);
@@ -143,7 +146,7 @@ var tekenBlokje = function() { // tekent blok
                 }
             }
         }
-        if ((spelerX + spelerWidth >= blokX[actiefBlok] && spelerX + spelerWidth <= blokX[actiefBlok] + blokWidth[actiefBlok]) || (spelerX >= blokX[actiefBlok] && spelerX <= blokX[actiefBlok] + blokWidth[actiefBlok])) {
+        if ((spelerX + spelerWidth >= blokX[actiefBlok] && spelerX + spelerWidth <= blokX[actiefBlok] + blokWidth[actiefBlok]) || (spelerX >= blokX[actiefBlok] && spelerX <= blokX[actiefBlok] + blokWidth[actiefBlok])) { // zorgt er voor dat je kan landen op een blok. Ik moest hier actief blok gebruiken, omdat er anders alleen naar de waardes van het derde blok werd gekeken.
             if (spelerY + spelerHeight <= blokY[actiefBlok] && bukStatus === false) {
                 groundHeight = blokY[actiefBlok] - spelerHeight;
             } else if (spelerY + spelerHeight + 35 <= blokY[actiefBlok] && bukStatus === true) {
@@ -152,12 +155,12 @@ var tekenBlokje = function() { // tekent blok
         } else {
             groundHeight = 615;
         }
-        if (blokX[i] < -350) {
+        if (blokX[i] < -350) { // zorgt er voor dat het blok terugkomt met nieuwe afmetingen en een nieuwe y-coördinaat, als het blok van het scherm af is.
             blokX[i] = 1280;
             blokY[i] = round(random(450, 600));
-            blokWidth[i] = blokAfmetingPool[round(random(-0.5, 3.5))];
-            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 2.5))];
-            while (blokY[i] + blokHeight[i] > 680) {
+            blokWidth[i] = blokAfmetingPool[round(random(-0.5, 3.5))]; // gaat van 0.5 tot 3.5 zodat alle mogelijke waardes (0-3) kunnen worden gekozen.
+            blokHeight[i] = blokAfmetingPool[round(random(-0.5, 2.5))]; // deze gaat tot 2.5 zodat de blokken niet te hoog kunne worden om overheen te springen.
+            while (blokY[i] + blokHeight[i] > 680) { // zorgt er voor dat een blok een nieuwe hoogte krijgt, als die een hoogte had waarmee die onder de grond uitkwam.
                 blokHeight[i] = blokAfmetingPool[round(random(-0.5, 1.5))];
             }
         }
@@ -171,13 +174,13 @@ var tekenBlokje = function() { // tekent blok
  * @param {number} y y-coördinaat
  */
 var tekenSpeler = function(x, y) {
-  if (bukStatus === false) {
+  if (bukStatus === false) { // tekent de speler als die niet bukt.
         spelerWidth = 35;
         spelerHeight = 65;
         fill("white");
         image(imgJack, x - 15, y - 5, 70, 70);
   }
-  if (bukStatus === true) {
+  if (bukStatus === true) { // tekent de speler als die bukt.
         spelerWidth = 65;
         spelerHeight = 45;
         fill("white");
@@ -187,7 +190,7 @@ var tekenSpeler = function(x, y) {
 
 
 /**
- * Updatet globale variabelen met positie van vijand of tegenspeler
+ * Updatet globale variabelen met positie van blok
  */
 var beweegBlokje = function() {
     for (var i = 0; i < 3; i = i + 1) {
@@ -197,8 +200,8 @@ var beweegBlokje = function() {
 
 
 /**
- * Kijkt wat de toetsen/muis etc zijn.
- * Updatet globale variabele spelerX en spelerY
+ * Kijkt wat de toetsen doen.
+ * Updatet globale variabele spelerY
  */
 var beweegSpeler = function() {
     if (springStatus === false) { // zodat maxJumpHeight alleen veranderd wordt als de speler op de grond staat.
@@ -221,19 +224,18 @@ var beweegSpeler = function() {
     }
     if (spelerY >= groundHeight) { 
         valStatus = false; // zodat de speler niet door de grond valt.
-        jumpSpeed = 4; // zodat de speler de volgende keer niet met een vreemde springsnelheid springt.
-        spelerY = groundHeight; // zodat de speler  altijd op de beginplaats terugkomt.
+        jumpSpeed = 4; // zodat de speler de volgende keer niet met een net verkeerde springsnelheid springt.
+        spelerY = groundHeight; // zodat de speler altijd op de beginplaats terugkomt en niet op een net verkeerde.
     }
     
     if (keyIsDown(16) && springStatus === false && valStatus === false) { // als je op shift drukt bukt de speler. Het zorgt er ook voor dat je niet tijdens het springen kan bukken.
         bukStatus = true;
-        if (blokSpeed > 0) {
+        if (blokSpeed > 0) { //vertraagt de speler tijdens het bukken. Hierdoor is het meer een slide.
             blokSpeed = blokSpeed - 0.075;
         }
-        // snelheid van de blokken nog vertragen, zodat je niet oneindig lang kan sliden.
-    } else {
+    } else { // zorgt er voor dat de speler niet bukt als je niet op shift drukt.
         bukStatus = false;
-        if (blokSpeed < 5.025) {
+        if (blokSpeed < 5.025) { // versnelt de speler weer, als die klaar is met bukken.
             blokSpeed = blokSpeed + 0.075;
         }
     }
@@ -246,20 +248,28 @@ var beweegSpeler = function() {
  */
 var checkGameOver = function() {
     for (var i = 0; i < 3; i = i + 1) {
-         if (bukStatus === false && (spelerX - blokX[i] <= blokWidth[i] && blokX[i] - spelerX <= spelerWidth  && spelerY - blokY[i] <= blokHeight[i] - 1 && blokY[i] - spelerY <= spelerHeight - 1)){
+         if (bukStatus === false && (spelerX - blokX[i] <= blokWidth[i] && blokX[i] - spelerX <= spelerWidth  && spelerY - blokY[i] <= blokHeight[i] - 1 && blokY[i] - spelerY <= spelerHeight - 1)){ // als dit waar is, dan raken de speler en het blokje elkaar in het geval dat de speler niet bukt. Er staat spelerHeight - 1, omdat je anders af zou gaan als je op het blok landt.
             return true;
         }
-        if (bukStatus === true && (spelerX - blokX[i] <= blokWidth[i] && blokX[i] - spelerX <= spelerWidth  && spelerY + 20 - blokY[i] <= blokHeight[i] - 1 && blokY[i] - spelerY + 20 <= spelerHeight - 1)){
+        if (bukStatus === true && (spelerX - blokX[i] <= blokWidth[i] && blokX[i] - spelerX <= spelerWidth  && spelerY + 20 - blokY[i] <= blokHeight[i] - 1 && blokY[i] - spelerY + 20 <= spelerHeight - 1)){ // als dit waar is, dan raken de speler en het blokje elkaar in het geval dat de speler bukt.
             return true;
         }
     }
 };
+
  
+/**
+ * Berekent de punten
+ */
 var berekenPunten = function () {
     score = round(afstand);
     return score;
 }
 
+
+/**
+ * Reset de waardes van bepaalde varaibelen, zodat de game de volgende keer goed start
+ */
 var gameReset = function () {
     spelerY = 615;
     score = 0;
@@ -271,7 +281,7 @@ var gameReset = function () {
     bukStatus = false;
     controlScherm = false;
     blokSpeed = 5.025;
-    for (var i = 0; i < 3; i = i + 1) {
+    for (var i = 0; i < 3; i = i + 1) { // zort er voor dat ieder blokje verschillende waardes heeft.
         if (i === 0) {
             blokX[i] = 1280;
         } else if (i === 1) {
@@ -288,13 +298,17 @@ var gameReset = function () {
     }
 }
 
+
+/**
+ * Tekent het verliesscherm
+ */
 var tekenVerliesScherm = function () {
     image(imgBackground, 0, 0, width, height);
     fill('black');
     textSize(80);
     text('YOU LOST', 440, 350)
     textSize(30);
-    text('Score:' + endscore, 450, 400);
+    text('Score:' + score, 450, 400);
     text('Highscore:' + highscore, 680, 400);
     var buttonText = ['restart', 'main menu'] 
     for (var i = 0; i < 2; i = i + 1) {
@@ -342,8 +356,8 @@ var tekenHomeScreen = function () {
 } 
 
 var checkNewHighscore = function () {
-    if (endscore > highscore) {
-        highscore = endscore;
+    if (score > highscore) {
+        highscore = score;
     }
 }
 
@@ -476,7 +490,6 @@ function draw() {
 
         if (checkGameOver()) {
             spelStatus = GAMEOVER;
-            endscore = score;
             checkNewHighscore();
         }
 
