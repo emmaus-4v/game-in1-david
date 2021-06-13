@@ -152,7 +152,7 @@ var tekenBlokje = function() {
             } else if (spelerY + spelerHeight + 35 <= blokY[actiefBlok] && bukStatus === true) {
                 groundHeight = blokY[actiefBlok] - (spelerHeight + 35);
             }
-        } else {
+        } else { // reset de hoogte waar je kan staan als je niet meer boven een blok zit.
             groundHeight = 615;
         }
         if (blokX[i] < -350) { // zorgt er voor dat het blok terugkomt met nieuwe afmetingen en een nieuwe y-coördinaat, als het blok van het scherm af is.
